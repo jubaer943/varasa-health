@@ -1,0 +1,196 @@
+/* table section start */
+.user-table{
+    max-width: 100%;
+    margin-top: 40px;
+    overflow-x: auto;
+    > table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border: 1px solid #029687;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+        > thead > tr > th{
+            font-size: 15px !important;
+        }
+        > thead > tr > th,
+        > tbody > tr > td{
+            padding: 5px;
+            color: #4D4D4D;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            border: 2px solid #029687;
+            > img {
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+                margin-top: 5px;
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+            }
+            > .see-more {
+                padding: 10px;
+                background: #E6F4F3;
+                color: #3D3D3D;
+                font-weight: 500;
+                border: 1.8px solid #00796b;
+                border-radius: 5px;
+                font-size: 12px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                transition: background-color 0.3s ease;
+                -webkit-transition: background-color 0.3s ease;
+                -moz-transition: background-color 0.3s ease;
+                -ms-transition: background-color 0.3s ease;
+                -o-transition: background-color 0.3s ease;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+            }
+        }
+        > thead > tr > th{
+            padding: 20px;
+           font-weight: 550;
+        }
+    }
+}
+/* table section end */
+
+.search-user{
+    position: relative;
+    > img{
+        z-index: 9;
+        margin-top: 13px;
+        margin-left: 20px;
+        position: absolute;
+    }
+    > input{
+        border: none;
+        outline: none;
+        width: 350px;
+        font-size: 15px;
+        padding: 17px 60px;
+        background-color: #FFFFFF;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+    }
+}
+.user-filter-btn{
+    display: flex;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: space-between;
+    > .user-left-btn{
+        gap: 20px;
+        flex-wrap: wrap;
+        display: flex;
+        > button{
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: #029687;
+            background-color: #FFFFFF;
+            border-radius: 50px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            -ms-border-radius: 50px;
+            -o-border-radius: 50px;
+        }
+        > button:first-child{
+            color: #FFFFFF;
+            background: #029687;
+        }
+    }
+    >.user-right-btn {
+        position: relative;
+        > button{
+            border: none;
+            cursor: pointer;
+            background-color: transparent;
+        }
+        > div{
+            width: 260px;
+            z-index: 9;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+            position: absolute;
+            margin-left: -230px;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -ms-border-radius: 8px;
+            -o-border-radius: 8px;
+            > button{
+                width: 100%;
+                display: flex;
+                color: #333333;
+                cursor: pointer;
+                margin-top: 8px;
+                padding: 10px 20px;
+                align-items: center;
+                background-color: #FFFFFF;
+                border: 1.8px solid rgb(180, 224, 219);
+                justify-content: space-between;
+                border-radius: 8px;
+                -webkit-border-radius: 8px;
+                -moz-border-radius: 8px;
+                -ms-border-radius: 8px;
+                -o-border-radius: 8px;
+                > div{
+                    gap: 5px;
+                    display: flex;
+                    align-items: center;
+                }
+                > img{
+                    height: 16px;
+                }
+            }
+        }
+        .hide-download-type{
+            display: none;
+        }
+    }
+}
+.user-details-order{
+    margin-top: 50px;
+}
+/* add sub admin */
+.add-presentation{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 10px;
+    min-width: 180px;
+    font-size: 15px 20px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    padding: 10px ;
+    background-color: #04A488;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+

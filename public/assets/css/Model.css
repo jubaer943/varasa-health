@@ -1,0 +1,99 @@
+.nurse-service-success{
+    display: none;
+    width: 100%;
+    z-index: 1;
+    > div{
+        z-index: 999;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(165, 170, 169, .7);
+        > div{
+            width: 600px;
+            padding: 25px;
+            padding-bottom: 40px;
+            background-color: #FFF;
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            -ms-border-radius: 10px;
+            -o-border-radius: 10px;
+            > .cross-icon{
+                display: flex;
+                align-items: end;
+                justify-content: end;
+                > img{
+                    cursor: pointer;
+                }
+            }
+            > .success-details{
+                display: flex;
+                margin-top: -20px;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                > img{
+                    height: 70px;
+                    margin-top: 20px;
+                }
+                >  h1{
+                    color: #41484D;
+                    margin-top: 10px;
+                    font-weight: 600;
+                }
+                >p{
+                    font-size: 14px;
+                    color: #4D565C;
+                    margin-top: 15px;
+                }
+                > button{
+                    cursor: pointer;
+                    margin-top: 30px;
+                    padding: 15px 40px;
+                    border: 1.5px solid #029687;
+                    background-color: #E6F4F3;
+                    border-radius: 5px;
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    -ms-border-radius: 5px;
+                    -o-border-radius: 5px;
+                }
+            }
+        }
+    }
+}
+
+
+.logout-btns{
+    gap: 20px;
+    display: flex;
+    > button{
+        cursor: pointer;
+        margin-top: 30px;
+        padding: 15px 40px;
+        color: #fff;
+        border: none;
+        font-weight: 500;
+        font-size: 15px;
+        background-color: #E6F4F3;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+    }
+    > button:first-child{
+        background-color: #B3261E;
+    }
+    > button:last-child{
+        background-color: #04A488;
+    }
+}
+
+
+.active_model{
+    display: block;
+}

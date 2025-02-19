@@ -1,0 +1,43 @@
+/* Campaign page */
+.campaign-table{
+    > tbody> tr > td{
+        > .campaign-bg{
+            width: 120px;
+            border-radius: 0px !important;
+            -webkit-border-radius: 0px !important;
+            -moz-border-radius: 0px !important;
+            -ms-border-radius: 0px !important;
+            -o-border-radius: 0px !important;
+        }
+        > .campaign-delete{
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+    }
+}
+
+/* add new campaign page */
+.Campaign-Banner{
+    margin-top: 20px;
+    >p{
+        color: #41484D;
+        font-weight: 400;
+        >span{
+            font-weight: 600;
+        }
+    }
+    > button{
+        height: 100px;
+        width: 100px;
+        cursor: pointer;
+        margin-top: 10px;
+        border: 1.6px solid #04A488;
+        background-color: #fff;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+}
+}

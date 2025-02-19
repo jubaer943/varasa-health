@@ -1,0 +1,328 @@
+.user-info{
+    > .user-name{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        >h2{
+            color: #293034;
+            font-weight: 550;
+        padding-top: 20px;
+
+        }
+        > div{
+            gap: 15px;
+            display: flex;
+            > button{
+                height: 42px;
+                padding: 10px 20px;
+                border: 1.7px solid #029687;
+                border-radius: 2px;
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                -ms-border-radius: 2px;
+                -o-border-radius: 2px;
+            }
+            > button:first-child{
+                gap: 15px;
+                display: flex;
+                align-items: center;
+                color: #029687;
+                font-weight: 600;
+                background-color: transparent;
+            }
+            > button:last-child{
+                color: #ffffff;
+                font-weight: 600;
+                background-color:#029687;
+            }
+        }
+    }
+    > .profile-photo{
+        margin-top: 20px;
+        >p{
+            color: #41484D;
+            font-weight: 550;
+            font-size: 15px;
+        }
+        > button{
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            margin-top: 15px;
+            background-color: #FFF;
+            border: 1.7px solid #029687;
+            border-radius: 100px;
+            -webkit-border-radius: 100px;
+            -moz-border-radius: 100px;
+            -ms-border-radius: 100px;
+            -o-border-radius: 100px;
+        }
+    }
+    > .user-details{
+        gap: 15px;
+        max-width: 1000px;
+        display: flex;
+        margin-top: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        > div{
+            width: 45%;
+            position: relative;
+            >label{
+                color: #293034;
+                font-weight: 500;
+                font-size: 16px;
+            }
+            > input{
+                width: 100%;
+                height: 50px;
+                outline: none;
+                padding: 20px;
+                margin-top: 7px;
+                color: #716c6c;
+                font-weight: 500;
+                font-size: 14px;
+                border: 1.6px solid #029687;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+            }
+            > input[type="date"]::-webkit-calendar-picker-indicator {
+                display: none; 
+            }
+            > img{
+                cursor: pointer;
+                margin-top: 20px;
+                margin-left: -40px;
+                position: absolute;
+            }
+        }
+    }
+
+
+    /* professional page start */
+    > .NID-License{
+        gap: 50px;
+        display: flex;
+        max-width: 1000px;
+        margin-top: 30px;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .NID-Attachment,
+    .License-Attachment{
+        width: 50%;
+        > h5{
+            font-size: 16px;
+            color: #41484D;
+        }
+        > div{
+            gap: 20px;
+            display: flex;
+            margin-top: 10px;
+            > div{
+                height: 80px;
+                width: 130px;
+                border: 1px solid brown ;
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                -ms-border-radius: 10px;
+                -o-border-radius: 10px;
+                > img{
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+            > .plus-icon{
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                border: 3px dotted #029687;
+                > img{
+                    height: 20px;
+                    width: 20px;
+                }
+
+            }
+        }
+    }
+    .Referral-NID{
+        margin-top: 30px;
+        > div > div{
+            min-width: 130px;
+        }
+    }
+    > button{
+        margin-top: 40px;
+        padding: 15px 80px;
+        font-weight: 500;
+        font-size: 15px;
+    }
+    /* professional page end */
+
+}
+
+
+/* professional profile start */
+.Earning-section{
+    margin-top: 50px;
+    > h1{
+        font-weight: 500;
+        font-size: 30px;
+    }
+    > .Earning-top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        > div{
+            position: relative;
+            > img{
+                position: absolute;
+                margin-top: 30px;
+                margin-left: 10px;
+            }
+            > input{
+                height: 40px;
+                width: 250px;
+                border: none;
+                padding: 5px;
+                margin-top: 20px;
+                background-color: white;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+            }
+        }
+        > a{
+            margin-top: 20px;
+            cursor: pointer;
+            color: #029687;
+            text-decoration: none;
+            border: 1.5px solid #029687;
+            padding: 10px 20px;
+            background-color: transparent;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -ms-border-radius: 5px;
+            -o-border-radius: 5px;
+        }
+    }
+    > p{
+        font-size: 20px;
+        color: #343D42;
+        font-weight: 400;
+        margin-top: 30px !important;
+        > span{
+            font-weight: 550;
+        }
+    }
+}
+.Earnings{
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    > div{
+        width: 270px;
+        padding: 20px;
+        margin-top: 20px;
+        border: 1.6px solid #04A488;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        > ul{
+            >li{
+                margin-top: 10px;
+                list-style: none;
+                display: flex;
+                color: #565F66;
+                align-items: center;
+                justify-content: space-between;
+                >p:last-child{
+                    font-weight: 550;
+                    color: #464c51;
+                }
+            }
+            > li:first-child{
+                margin-top: 0px;
+            }
+        }
+    }
+}
+.Professional-order{
+    margin-top: 40px;
+}
+
+/* professional earning start */
+.Commission{
+    > h5{
+        font-size: 30px;
+        font-weight: 500px !important;
+        color: #293034;
+        margin-top: 30px;
+    }
+    > .Commission-date{
+        gap: 20px;
+        display: flex;
+        > select{
+            cursor: pointer;
+            outline: none;
+            margin-top: 20px;
+            padding: 13px 20px;
+            border: 1.6px solid #D0D0D0;
+            border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -ms-border-radius: 8px;
+            -o-border-radius: 8px;
+}
+    }
+    > .sub-commission{
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        > div{
+            width: 270px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            -ms-border-radius: 10px;
+            -o-border-radius: 10px;
+            > div >p:first-child,
+            >p:first-child{
+                font-size: 16px;
+                color: #4A5157;
+                font-weight: 500;
+            }
+            > div >p:last-child,
+            >p:last-child{
+                font-size: 22px;
+                color: #04A488;
+                font-weight: 600;
+                margin-top: 10px;
+            }
+        }
+        .edit-due{
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+}
+

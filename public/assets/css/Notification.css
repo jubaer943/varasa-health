@@ -1,0 +1,57 @@
+.notification-date{
+    margin: 20px 0;
+}
+.all-notification{
+    > div{
+        color: #293034;
+        margin-top: 10px;
+        display: flex;
+        padding: 20px;
+        max-width: 900px;
+        align-items: center;
+        border: 1.6px solid #04A488;
+        background-color: #fff;
+        justify-content: space-between;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        > div{
+            gap: 20px;
+            display: flex;
+            align-items: center;
+            > div{
+                >h4{
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #293034;
+                }
+                >p{
+                    font-size: 14px;
+                    color: #293034;
+                    margin-top: 10px;
+                    > span{
+                        font-weight: 500;
+                    }
+                }
+            }
+            >p{
+                font-size: 14px;
+            }
+            >a{
+                padding: 8px;
+                font-size: 13px;
+                color: #04A488;
+                text-decoration: none;
+                border: 1.6px solid #04A488;
+                background-color: transparent;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+            }
+        }
+    }
+}

@@ -1,0 +1,698 @@
+@media (max-width: 1400px){
+    .authentication{
+        gap: 10px;
+        > form{
+            width: 50%;
+            padding: 80px;
+        }
+    }
+
+    .user-name,
+    .user-details,
+    .order-summary {
+        width: 100% !important;
+    }
+
+    /* service */
+    .all-service{
+        gap: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* diagnostic-collection start */
+    .diagnostic-collection{
+        width: 400px !important;
+        > .service-btns{
+            > div{
+                gap: 10px;
+                > div:first-child{
+                    width: 80px;
+                }
+                > .details{
+                    width: 170px;
+                }
+                > div:last-child{
+                    width: 80px;
+                }
+            }
+        }
+    }
+/* diagnostic-collection end */
+}
+@media (max-width: 1360px){
+    .card {
+        max-width: 480px;
+    }
+    .all-faq > div > div > input,
+    .all-activities > div > div > input,
+    .input-section > input,
+    .input-section > div > input,
+    .input-section > div > div > input{
+        width: 100% !important;
+    }
+    .input-section{
+        width: 60%;
+        > div{
+            width: 100%;
+            display: flex;
+            align-items: start !important;
+            justify-content: start !important;
+            flex-direction: column;
+            > div{
+                width: 100%;
+                display: flex;
+                align-items: start;
+                justify-content: start;
+                flex-direction: column;
+                > div{
+                    width: 100%;
+                    display: flex;
+                    align-items: start !important;
+                    justify-content: start !important;
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+    .faq > div{
+        margin-top: 30px;
+         > input{
+            margin-top: -5px !important;
+        }
+    }
+    .faq > div:first-child{
+        margin-top: 5px;
+    }
+    .all-activities > div > div > input{
+        margin-top: 20px !important;
+    }
+    .Answer_input{
+        margin-top: -5px !important;
+    }
+    .faq-btns,
+    .activities-btns{
+        margin-top: -15px;
+    }
+    .inp-section{
+        margin-top: 20px;
+    }
+}
+@media (max-width: 1360px){
+    .setting-right> div{
+        width: 100% !important;
+    }
+}
+@media (max-width: 1200px){
+    .dashboard {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+    /* authentication start */
+    .authentication{
+        > form{
+            padding-left: 30px;
+        }
+        > div > div {
+            > img{
+                max-width: 500px;
+            }
+        }
+    }
+    /* authentication end */
+
+    .service-fee-details{
+        gap: 30px;
+        > div{
+            > div{
+                gap: 10px;
+                > .service-info{
+                    font-size: 12px;
+                    width: 150px;
+                }
+            }
+        }
+    }
+
+
+    /* setting */
+    .setting-left{
+        min-width: 300px;
+    }
+}
+@media (max-width: 1100px){
+    /* order pages */
+    .order-type-btn{
+        > .right-btns{
+            gap: 5px !important;
+            > div{
+                > button{
+                    width: 110px !important;
+                }
+            }
+        }
+    }
+    /* order pages */
+}
+@media (max-width: 1065px){
+    .side-navbar{
+        display: none;
+    }
+    .bar-icon{
+        display: block !important;
+    }
+
+
+    
+    /* authentication start */
+    .authentication{
+        gap: 20px;
+        > form{
+            padding-left: 0px;
+            padding-right: 20px;
+        }
+        > div > div {
+            > img{
+                max-width: 400px;
+            }
+        }
+    }
+
+    .auth-bg > div{
+        width: 95%;
+    }
+    /* authentication end */
+}
+@media (max-width: 1000px){
+    .dashboard {
+        display: flex;
+        align-items: center;
+        flex-direction:row ;
+        justify-content: space-between;
+    }
+
+
+    /* navbar start */
+    .varasa-pages{
+        width: 100%;
+        display: flex;
+        align-items: start;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .user-table{
+        > table {
+            min-width: 990px;
+        }
+    }
+
+        /* table */
+        .user-filter-btn{
+            margin-top: 20px;
+            > .user-left-btn{
+                gap: 10px;
+                > button{
+                    padding: 10px 15px;
+                    font-size: 14px;
+                }
+            }
+        }
+        .user-right-btn > button> img{
+            height: 22px;
+        }
+}
+@media (max-width: 876px){ 
+    .dashboard {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* navbar start*/
+    .top-navbar{
+        padding: 0 10px;
+        > div{
+            gap: 20px;
+            > div{
+                > h6{
+                    font-size: 14px;
+                }
+                >p{
+                    font-size: 11px;
+                }
+            }
+            > a >p{
+                font-size: 14px;
+            }
+        }
+    }
+
+    .notification{
+        margin-right: 20px !important;
+    }
+    /* navbar end*/
+
+    /* authentication start */
+    .authentication{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        > div {
+            width: 80%;
+            > div {
+                width: 100%;
+                > img{
+                    max-width: 100%;
+                }
+            }
+        }
+        > form{
+            width: 80%;
+            padding-right: 0px;
+        }
+    }
+    /* authentication end */
+
+    /* order pages */
+    .Order-box-section,
+    .order-type-btn{
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        > .right-btns{
+            margin-top: 20px !important;
+        }
+        > .Order-box{
+            min-width: 100%;
+        }
+    }
+    /* order pages */
+
+    /* edit video consultation start*/
+    .FAQ-section,
+    .FAQ-section > div,
+    .Activities-section {
+        display: flex;
+        align-items: start !important;
+        justify-content: start;
+        flex-direction: column;
+    }
+
+    /* Our Service Edit Caregiver */
+    .service-fee-details{
+        flex-direction: column;
+        > div{
+            > div{
+                gap: 5px;
+                > .service-info{
+                    font-size: 11px;
+                    width: 150px;
+                }
+            }
+        }
+    }
+
+
+    .Earning-top {
+        > div > input{
+            width: 230px;
+        }
+        > a{
+            padding: 10px !important;
+        }
+    }
+
+    /* notification */
+    .all-notification{
+        > div{
+            padding-bottom: 20px !important;
+            display: block;
+            > div:last-child{
+                margin-top: 15px;
+            }
+        }
+    }
+    .notification-time{
+        display: block !important;
+        > p{
+            margin-bottom: 12px !important;
+        }
+    }
+
+
+    /* order details table */
+    .order-summary {
+        td {
+            padding:10px !important;
+            font-size: 13px !important;
+        }
+    }
+    .order-details-title > h1{
+        font-size: 19px !important;
+    }
+}
+@media (max-width: 800px){
+    .setting{
+        display: block;
+    }
+    .setting-left{
+        max-width: 400px;
+        > div{
+            width: 100%;
+        }
+    }
+    .setting-right{
+        padding-left: 0px;
+        margin-top: 40px;
+        border: none;
+        padding-top: 20px;
+        border-top: 1.6px solid #04A488;
+    }
+}
+@media (max-width: 730px){
+    /* order details */
+    .order-details{
+        padding: 10px;
+        padding-bottom: 30px;
+        margin-bottom: 100px;
+    }
+    .profile-photo,
+    .user-details{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        > div {
+            width: 100% !important;
+        }
+    }
+
+    .input-section{
+        width: 100%;
+    }
+
+
+     .user-name{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        > div{
+            margin-top: 20px;   
+            > button{
+                padding: 5px !important;
+            }
+        }
+    }
+    .NID-License{
+        flex-direction: column;
+        justify-content: center;
+        > div{
+            width: 100% !important;
+        }
+    }
+
+
+    /* user details */
+    .user_Professional_info{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .Professional-info,
+    .user-info{
+        .user-name{
+            > a{
+                margin-top: 10px;
+            }
+        }
+    }
+}
+@media (max-width: 650px){
+    .page-border{
+        padding: 10px;
+    }
+
+    /* navbar */
+    .app-link{
+        > p > span,
+        > img{
+            display: none;
+        }
+    }
+    .email{
+        display: none;
+    }
+    /* navbar end */
+
+    /* user */
+    .Professional-info,
+    .user-info{
+        .user-name{
+            > h2{
+                font-size: 18px;
+            }
+            > a{
+                font-size: 12px;
+                letter-spacing: 0px;
+                padding: 10px;
+                font-weight: 500;
+            }
+        }
+    }
+
+    /* dashboard */
+    .dashboard-top{
+        margin-top: 20px;
+        justify-content: center;
+    }
+    .notification-box{
+        top: 150%;
+        left: -100% !important;
+    }
+
+
+    /* sub admin */
+    .presentation,
+    .sub-commission,
+    .Earnings{
+        gap: 10px;
+        justify-content: center !important;
+    }
+
+    /* Our Service Nurse */
+    .Video-Consultation{
+        > form{
+            margin-bottom: 20px;
+        }
+    }
+}
+@media (max-width: 576px){
+    /* authentication start */
+    .authentication{
+        > form{
+            width: 95%;
+            .password-section{
+                display: block;
+                width: 100%;
+                > div{
+                    width: 100%;
+                    margin-top: 20px;
+                    > input{
+                        position: relative;
+                    }
+                    >i{
+                        cursor: pointer;
+                        color: #525B61;
+                        margin-left: -35px;
+                        margin-top: 28px;
+                        position: absolute;
+                    }
+                }
+            }
+        }
+    }
+    .auth-bg{
+        > div{
+            height: 650px;
+            > form{
+                width: 95%;
+                > .form-top{
+                    > h1{
+                        font-size: 30px;
+                        font-weight: 600;
+                        font-family: sans-serif;
+                    }
+                }
+            }
+        }
+    }
+    /* authentication end */
+
+    .page-body{
+        padding: 10px;
+        padding-bottom: 150px;
+    }
+}
+@media (max-width: 520px){
+    /* responsive navbar */
+    .top-navbar{
+        > div{
+            gap: 10px;
+        }
+    }
+
+    .card {
+        max-width: 350px;
+    }
+    .bar {
+        width: 20px;
+    }
+    .chart-two > div > .bar{
+        width: 30px !important;
+    }
+
+
+    /* notification */
+    .notification{
+        > div{
+            padding: 10px;
+            > div{
+                > div{
+                    >h4{
+                        font-size: 14px;
+                    }
+                    >p{
+                        font-size: 12px;
+                    }
+                }
+                >p{
+                    font-size: 12px;
+                }
+                >a{
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 480px){
+    /* order pages start */
+    .search_refresh{
+        > div{
+            position: relative;
+            > img{
+                height: 20px;
+                margin-top: 10px !important;
+            }
+            > input{
+                padding: 12px 35px !important;
+            }
+        }
+        > button{
+            padding: 5px 10px !important;
+            > img{
+                height: 20px;
+            }
+        }
+    }
+    .order-type-btn{
+        > .lefts-btn{
+            > button{
+                padding: 8px !important;
+                width: 115px !important;
+                font-size: 12px !important;
+            }
+        }
+        .right-btns{
+            > div{
+                > input,
+                > select{
+                    width: 110px !important;
+                    height: 40px !important;
+                    font-size: 12px !important;
+                }
+            }
+        }
+    }
+    .Order-box{
+        padding: 10px !important;
+        > .order-time{
+            > p,
+            > div > p{
+                font-size: 12px !important;
+            }
+        }
+        > .order-img{
+            >p{
+                font-size: 13px;
+            }
+        }
+        .order-hr{
+            margin: 10px 0 !important;
+        }
+        > .order-amount{
+            > div > p{
+                font-size: 12px !important;
+            }
+            > a{
+                font-size: 12px !important;
+                padding: 8px !important;
+            }
+        }
+    }
+    /* order pages end */
+
+    /* edit video consultation start*/
+    .Video-Consultation> h1{
+        font-size: 20px;
+    }
+    .input-section > div,
+    .input-section > div > div,
+    .input-section > input,
+    .input-section > div > input,
+    .input-section > div > div > input{
+        width: 100% !important;
+    }
+    /* edit video consultation end*/
+
+
+    
+    /* diagnostic-collection start */
+    .diagnostic-collection{
+        width: 350px !important;
+        > .service-btns{
+            > div{
+                gap: 5px;
+                > div:first-child{
+                    width: 70px;
+                }
+                > .details{
+                    width: 160px;
+                }
+                > div:last-child{
+                    width: 70px;
+                }
+            }
+        }
+    }
+/* diagnostic-collection end */
+}
+
+
+
+/* 
+576px
+768px
+992px
+1200px
+1400px 
+*/

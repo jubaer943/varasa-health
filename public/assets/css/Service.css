@@ -1,0 +1,679 @@
+.all-service{
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    > .service{
+        width: 270px;
+        padding: 20px;
+        background-color: #FFF;
+        border: 1.6px solid #029687;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+        > .service-img{
+            width: 100%;
+            height: 170px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: #E6F4F3;
+            border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -ms-border-radius: 8px;
+            -o-border-radius: 8px;
+            > a{
+                top: 4%;
+                right: 4%;
+                height: 35px;
+                width: 35px;
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                position: absolute;
+                justify-content: center;
+                background-color: #029687;
+                border-radius: 100px;
+                -webkit-border-radius: 100px;
+                -moz-border-radius: 100px;
+                -ms-border-radius: 100px;
+                -o-border-radius: 100px;
+            }
+            .edit-desable{
+                background-color: #D2D2D2;
+            }
+        }
+        > .service-body{
+            text-align: center;
+            > h4{
+                font-size: 14px;
+                margin-top: 15px;
+                color: #41484D;
+                font-weight: 600;
+            }
+            .sub-title-disable{
+                color: #D2D2D2;
+            }
+            > p{
+                margin-top: 5px;
+                display: flex;
+                font-size: 16px;
+                color: #41484D;
+                font-weight: 600;
+                align-items: center;
+                justify-content: center;
+                > img{
+                    height: 20px;
+                    margin-right: 5px;
+                }
+            }
+            .sub-des-disable{
+                opacity: 0.5;
+            }
+        }
+        .service-btns > button,
+        > button{
+            padding: 10px 40px;
+            margin-top: 20px;
+        }
+        .service-btns{
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            > button{
+                margin-top: 0px;
+                padding: 10px !important;
+            }
+        }
+    }
+}
+.NurseCaregiver > div > button{
+    padding: 10px !important;
+    margin-top: 10px !important;
+    font-size: 12px !important;
+}
+.NurseCaregiver-switch{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
+.NurseCaregiver-top{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+.disabled-service {
+    > .service-img{
+        cursor:auto !important;
+        background-color:#F7F7F7 !important;
+        > a{
+            background-color:#D2D2D2 !important;
+            cursor:auto !important;
+        }
+    }
+    > div{
+        >h4{
+            color:#CCCCCC !important;
+        }
+        >p{
+            color:#CCCCCC !important;
+        }
+    }
+    > div > button,
+    > button{
+        background-color: #CCCCCC;
+        cursor:auto !important;
+    }
+}
+.sub_nurse_submit > a{
+    color: #ffff;
+    text-decoration: none;
+}
+/* service end */
+
+
+/* Edit Doctor Video Consultation start */
+.Video-Consultation{
+    > h1{
+        font-size: 25px;
+        color: #293034;
+        font-weight: 600;
+    }
+    > form{
+        > div > label{
+            cursor: pointer;
+        }
+        > div{
+            margin-top: 25px;
+            > label,
+            > div > label,
+            > div > div > label{
+                font-size: 14px;
+                font-weight: 400;
+                color: #41484D;
+            }
+        }
+        .img-upload-section{
+            > div{
+                cursor: pointer;
+                width: 120px;
+                height: 110px;
+                display: flex;
+                margin-top: 10px;
+                align-items: center;
+                justify-content: center;
+                background-color: #FFF;
+                border: 1.6px solid #029687;
+                border-radius: 8px;
+                -webkit-border-radius: 8px;
+                -moz-border-radius: 8px;
+                -ms-border-radius: 8px;
+                -o-border-radius: 8px;
+                > div{
+                    width: 50px;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #EDEDED;
+                    border-radius: 5px;
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    -ms-border-radius: 5px;
+                    -o-border-radius: 5px;
+                }
+            }
+        }
+        .all-faq > div > div > input,
+        .all-activities > div > div > input,
+        .input-section > input,
+        .input-section > div > input,
+        .input-section > div > div > input{
+            display: block;
+            width: 340px;
+            height: 45px;
+            outline: none;
+            padding: 20px;
+            margin-top: 10px;
+            color: #716c6c;
+            font-weight: 500;
+            font-size: 14px;
+            border: 1.6px solid #029687;
+            border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -ms-border-radius: 8px;
+            -o-border-radius: 8px;
+        }
+        .input-section > input::placeholder,
+        .input-section > div > input::placeholder,
+        .input-section > div > div > input::placeholder{
+            color: #716c6c;
+            font-weight: 500;
+            font-size: 14px ;
+        }
+        .active_input_area{
+            margin-top: 20px;
+        }
+        .all-faq,
+        .all-activities{
+            display: flex !important;
+            align-items: start !important;
+            justify-content: start !important;
+            flex-direction: column !important;
+            > div > div{
+                gap: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                > div{
+                    > button{
+                        padding: 10px 30px;
+                        border: none;
+                        height: 45px;
+                        margin-top: 10px;
+                        font-weight: 550;
+                        font-size: 14px;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        -webkit-border-radius: 5px;
+                        -moz-border-radius: 5px;
+                        -ms-border-radius: 5px;
+                        -o-border-radius: 5px;
+                    }
+                    > .edit-btn{
+                        color: #029687;
+                        border: 1.8px solid #029687;
+                        background-color: transparent;
+                    }
+                    > .delete-btn{
+                        color: #FFF;
+                        background-color: #B3261E;
+                    }
+                }
+            }
+        }
+        .all-faq  > div {
+            flex-direction: column ;
+        }
+        .FAQ-section,
+        .FAQ-section > div,
+        .Activities-section{
+            > div{
+                gap: 10px;
+                display: flex;
+                align-items: end;
+            }
+            > div > button{
+                padding: 10px 30px;
+                color: #FFF;
+                border: none;
+                height: 45px;
+                font-weight: 550;
+                font-size: 14px;
+                cursor: pointer;
+                background: #029687;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+            }
+        }
+        >div > a,
+        > button{
+            margin-top: 50px !important;
+            padding: 10px 100px;
+            color: #FFF;
+            border: none;
+            height: 45px;
+            font-weight: 550;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            background: #029687;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -ms-border-radius: 5px;
+            -o-border-radius: 5px;
+        }
+    }
+}
+
+
+.Advanced-Service > .SERVICE-CHECK{
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    > .AdvancedService{
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+        accent-color: #029687;
+    }
+    > label{
+        cursor: pointer;
+    }
+}
+
+/* advance-service-details start */
+.advance-service-details{
+    display: none;
+    margin-top: 20px;
+    > button{
+        padding: 10px 30px;
+        color: #FFF;
+        border: none;
+        height: 45px;
+        font-weight: 550;
+        font-size: 14px;
+        cursor: pointer;
+        background: #029687;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+    }
+}
+.advanced-service-info > div,
+.advance-service-details > input,
+.advance-service-details > select{
+    width: 150px;
+    height: 45px;
+    padding: 10px;
+    color: #7a7474;
+    font-weight: 500;
+    font-size: 14px;
+    outline: none;
+    background-color: #FFF;
+    border: 1.6px solid #029687;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+.active-service-details{
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: start;
+}
+
+/* order-info start*/
+.advanced-service-info{
+    display: none;
+    margin-top: 20px;
+    align-items: center;
+    > button{
+        padding: 10px 30px;
+        height: 45px;
+        font-weight: 550;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+    }
+    > .edit-order-info{
+        color: #029687;
+        background-color: transparent;
+        border: 1.6px solid #029687;
+    }
+    > .delete-order-info{
+        color: #FFF;
+        background-color: #B3261E;
+        border: none;
+    }
+}
+.active-service_info{
+    gap: 20px;
+    display: flex;
+}
+
+/* order-info end*/
+/* advance-service-details end */
+/* Edit Doctor Video Consultation end */
+
+
+/* Nurse Caregiver & Senior Care */
+.service-fee-details{
+    gap: 100px;
+    display: none;
+    > div{
+        > div{
+            gap: 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            > .service-check{
+                height: 20px;
+                width: 20px;
+                cursor: pointer;
+                accent-color: #029687;
+            }
+            > .service-info{
+                padding: 15px;
+                width: 160px;
+                outline: none;
+                font-size: 13.5px;
+                color: #525B61;
+                font-weight: 500;
+                background-color: #FFF;
+                border: 1.7px solid #029687;
+                border-radius: 8px;
+                -webkit-border-radius: 8px;
+                -moz-border-radius: 8px;
+                -ms-border-radius: 8px;
+                -o-border-radius: 8px;
+            }
+            > .service-info::placeholder{
+                color: #898f92;
+            }
+        }
+    }
+}
+.active_NurseCaregiver{
+    display: flex;
+}
+/* Nurse Caregiver & Senior Care end */
+
+/* diagnostic-service start */
+.diagnostic-service{
+    .service-body{
+        display: flex;
+        align-items: start;
+        margin-top: -15px;
+        justify-content: space-between;
+        >p{
+            margin-top: 15px !important;
+        }
+    }
+    > .service-btns{
+        > div{
+            margin-top: 12px;
+        }
+    }
+}
+/* diagnostic-service end */
+
+/* urin_test start */
+.urin_test{
+    >h1{
+        color: #293034;
+        font-weight: 600;
+        font-size: 30px;
+    }
+    > form{
+        >.TestName{
+            max-width: 400px;
+            margin-top: 30px;
+        }
+        >.TestName,
+        .urin-test-bottom  > .TestPrice,
+        .urin-test-bottom> .HospitalName,
+        .urin-test-bottom> .Test-btns{
+            >label{
+                color: #41484D;
+                font-size: 16px;
+                font-weight: 600;
+            }
+            > input{
+                display: block;
+                width: 100%;
+                height: 45px;
+                outline: none;
+                padding: 20px;
+                color: #716c6c;
+                font-weight: 500;
+                font-size: 14px;
+                border: 1.6px solid #029687;
+                border-radius: 8px;
+                -webkit-border-radius: 8px;
+                -moz-border-radius: 8px;
+                -ms-border-radius: 8px;
+                -o-border-radius: 8px;
+            }
+        }
+        .TestName > input,
+        .urin-test-one > div > input{
+            margin-top: 8px;
+        }
+        .urin-test-bottom{
+            gap: 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            > .TestPrice,
+            > .HospitalName,
+            > .Test-btns{
+                > input{
+                    width: 100%;
+                }
+            }
+            > .TestPrice{
+                width: 200px;
+            }
+            > .HospitalName{
+                width: 300px;
+            }
+            > .Test-btns-top{
+                margin-top: 18px;
+                > .button{
+                    border: none !important;
+                    background-color:#029687 !important;
+                }
+            }
+            > .Test-btns{
+                gap: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                > button{
+                    height: 45px;
+                    min-width: 100px;
+                    padding: 10px 20px;
+                    display: flex;
+                    cursor: pointer;
+                    font-weight: 600;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    -webkit-border-radius: 8px;
+                    -moz-border-radius: 8px;
+                    -ms-border-radius: 8px;
+                    -o-border-radius: 8px;
+                }
+                > button:first-child{
+                    width: 130px;
+                    border: 3px dotted #029687;
+                }
+                > .edit{
+                    color:#029687;
+                    border: 1.6px solid #029687;
+                }
+                > button:last-child{
+                    color: #FFFF;
+                    background: #B3261E;
+                    border: 3px dotted #B3261E;
+                }
+                .delete-btn{
+                    border: none !important;
+                    background-color:#029687 !important;
+                }
+            }
+        }
+        .diagnostic-add-btn,
+        .test-urin-save-btn{
+            padding: 15px 80px;
+            margin-top: 30px;
+            border: none;
+            color: #FFFF;
+            font-weight: 600;
+            border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -ms-border-radius: 8px;
+            -o-border-radius: 8px;
+        }
+        .diagnostic-add-btn{
+            cursor: pointer;
+            margin-top: 50px;
+            background-color: #029687 ;
+        }
+        .test-urin-save-btn{
+            background-color: #D2D2D2;
+        }
+    }
+}
+/* urin_test end */
+
+
+/* diagnostic-collection start */
+.diagnostic-collection{
+    width: 520px !important;
+    > .service-body{
+        >h4{
+            font-size: 18px !important;
+        }
+        > div{
+            margin-top: 10px;
+            >p{
+                color: #4D565C;
+            }
+        }
+        > div{
+            gap: 10px;
+            display: flex;
+            align-items: center;
+            > a{
+                padding: 8px;
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                background-color: #029687;
+                border-radius: 100px;
+                -webkit-border-radius: 100px;
+                -moz-border-radius: 100px;
+                -ms-border-radius: 100px;
+                -o-border-radius: 100px;
+            }
+        }
+    }
+    > .service-btns{
+        width: 100%;
+        display: flex;
+        margin-top: 30px !important;
+        align-items: start !important;
+        justify-content: start !important;
+        flex-direction: column;
+        > div{
+            gap: 10px;
+            min-width: 80%;
+            display: flex;
+            > div{
+                height: 40px;
+                display: flex;
+                color: #FFF;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 500;
+                align-items:center;
+                justify-content: center;
+                background-color: #029687;
+                border-radius: 8px;
+                -webkit-border-radius: 8px;
+                -moz-border-radius: 8px;
+                -ms-border-radius: 8px;
+                -o-border-radius: 8px;
+            }
+            > div:first-child{
+                width: 100px;
+                background-color: #FFFF;
+                border: 2px dotted #029687;
+            }
+            > .details{
+                width: 250px;
+            }
+            > div:last-child{
+                width: 100px;
+            }
+        }
+    }
+}
+/* diagnostic-collection end */
