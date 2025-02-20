@@ -181,4 +181,18 @@ class AuthController extends Controller
             return response()->json(['error' => 'An error occurred'], 500);
         }
     }
+
+    public function add_location(Request $request)
+    {
+        return $request->input();
+        // $token = JWTAuth::getToken();
+        // if (!$token) {
+        //     return response()->json(['satus' => false, 'code' => 400, 'message' => 'Token not provided']);
+        // }
+        // $payload = JWTAuth::parseToken()->getPayload();
+
+        // $location = AppUser::where('id', $payload->get('sub'))->first()->UserLocation;
+
+        // return response()->json($location);
+    }
 }

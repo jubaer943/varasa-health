@@ -25,6 +25,12 @@ class AppUser extends Model implements JWTSubject
         'otp_expires_at',
     ];
 
+
+    public function UserLocation()
+    {
+        return $this->hasMany(UserLocation::class, 'user_id');
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

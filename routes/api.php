@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\auth\AuthController;
 use App\Http\Controllers\api\v1\home\DashboardController;
 use App\Http\Controllers\api\v1\home\ServiceController;
+use App\Http\Controllers\api\v1\TimeSlotController;
 use App\Http\Controllers\Servicecontroller as ControllersServicecontroller;
 use PHPUnit\Architecture\Services\ServiceContainer;
 
@@ -16,7 +17,7 @@ Route::prefix('v1')->group(function () {
         Route::post('verify', [AuthController::class, 'verify']);
 
         Route::post('login', [AuthController::class, 'user_login']);
-
+        Route::post('location', [AuthController::class, 'add_location']);
         // Route::get('test', function () {
         //     return response()->json(['message' => 'API Routes are working!']);
         // });
@@ -33,4 +34,6 @@ Route::prefix('v1')->group(function () {
             return response()->json(['message' => 'Home API Routes are working!']);
         });
     });
+
+    Route::get('user/schedules', [TimeSlotController::class, 'index']);
 });
