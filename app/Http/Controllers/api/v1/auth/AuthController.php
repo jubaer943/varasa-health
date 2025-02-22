@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppUser;
+use App\Models\UserLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -145,6 +146,7 @@ class AuthController extends Controller
             $payload = JWTAuth::parseToken()->getPayload();
 
             $user = AppUser::where('id', $payload->get('sub'))->first();
+            $location = $user->UserLocation()->first();
 
             if ($user) {
                 return response()->json([
@@ -157,7 +159,13 @@ class AuthController extends Controller
                         'gender' => $user->gender,
                         'phone' => $user->phone,
                         'email' => $user->email,
-                        'primary_location' => $user->primary_location,
+                        'primary_location' => [
+                            'id' => $location->id,
+                            'flat_no' => $location->flat_no,
+                            'house_no' => $location->house_no,
+                            'road' => $location->road,
+                            'aria' => $location->aria,
+                        ],
                         'profile_picture' => $user->profile_picture,
                     ],
                     'description' => null,
@@ -184,15 +192,28 @@ class AuthController extends Controller
 
     public function add_location(Request $request)
     {
-        return $request->input();
-        // $token = JWTAuth::getToken();
-        // if (!$token) {
-        //     return response()->json(['satus' => false, 'code' => 400, 'message' => 'Token not provided']);
-        // }
-        // $payload = JWTAuth::parseToken()->getPayload();
+        // return $request->input();
+        $token = JWTAuth::getToken();
+        if (!$token) {
+            return response()->json(['satus' => false, 'code' => 400, 'message' => 'Token not provided']);
+        }
 
-        // $location = AppUser::where('id', $payload->get('sub'))->first()->UserLocation;
+        $payload = JWTAuth::parseToken()->getPayload();
 
-        // return response()->json($location);
+        $location = UserLocation::create([
+            'flat_no' => $request->flat_no,
+            'house_no' => $request->house_no,
+            'road' => $request->road,
+            'aria' => $request->aria,
+            'user_id' => $payload->get('sub'),
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'Location added successfully !',
+            'data' => null,
+            'description' => null,
+        ]);
     }
 }

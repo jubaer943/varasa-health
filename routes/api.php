@@ -36,4 +36,6 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::get('user/schedules', [TimeSlotController::class, 'index']);
+
+    // Route::post('user/order',  []);
 });

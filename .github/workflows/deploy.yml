@@ -1,0 +1,31 @@
+name: Deploy to cPanel via SSH
+
+on:
+  push:
+    branches:
+      - main  # Change this if you're using a different branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.ABDULLAH }}
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/${{ secrets.SSH_USER }}/public_html   # Update the path if needed
+            git pull origin main  # Pull the latest changes from GitHub
+            composer install --no-dev --optimize-autoloader   # Install dependencies
+            php artisan migrate --force  # Run migrations
+            php artisan config:clear   # Clear config cache
+            php artisan route:clear    # Clear route cache
+            php artisan cache:clear    # Clear application cache
+            EOF
