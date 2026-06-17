@@ -1,9 +1,10 @@
 /* table section start */
-.user-table{
+.user-table {
     max-width: 100%;
     margin-top: 40px;
     overflow-x: auto;
-    > table {
+
+    >table {
         width: 100%;
         border-collapse: collapse;
         background-color: #fff;
@@ -13,18 +14,21 @@
         -moz-border-radius: 8px;
         -ms-border-radius: 8px;
         -o-border-radius: 8px;
-        > thead > tr > th{
+
+        >thead>tr>th {
             font-size: 15px !important;
         }
-        > thead > tr > th,
-        > tbody > tr > td{
+
+        >thead>tr>th,
+        >tbody>tr>td {
             padding: 5px;
             color: #4D4D4D;
             font-size: 15px;
             font-weight: 400;
             text-align: center;
             border: 2px solid #029687;
-            > img {
+
+            >img {
                 width: 40px;
                 height: 40px;
                 cursor: pointer;
@@ -35,7 +39,8 @@
                 -ms-border-radius: 50%;
                 -o-border-radius: 50%;
             }
-            > .see-more {
+
+            >.see-more {
                 padding: 10px;
                 background: #E6F4F3;
                 color: #3D3D3D;
@@ -59,23 +64,27 @@
                 -o-border-radius: 5px;
             }
         }
-        > thead > tr > th{
+
+        >thead>tr>th {
             padding: 20px;
-           font-weight: 550;
+            font-weight: 550;
         }
     }
 }
+
 /* table section end */
 
-.search-user{
+.search-user {
     position: relative;
-    > img{
+
+    >img {
         z-index: 9;
         margin-top: 13px;
         margin-left: 20px;
         position: absolute;
     }
-    > input{
+
+    >input {
         border: none;
         outline: none;
         width: 350px;
@@ -89,16 +98,19 @@
         -o-border-radius: 8px;
     }
 }
-.user-filter-btn{
+
+.user-filter-btn {
     display: flex;
     margin-top: 30px;
     align-items: center;
     justify-content: space-between;
-    > .user-left-btn{
+
+    >.user-left-btn {
         gap: 20px;
         flex-wrap: wrap;
         display: flex;
-        > button{
+
+        >button {
             padding: 12px 20px;
             border: none;
             cursor: pointer;
@@ -112,19 +124,23 @@
             -ms-border-radius: 50px;
             -o-border-radius: 50px;
         }
-        > button:first-child{
+
+        >.active {
             color: #FFFFFF;
             background: #029687;
         }
     }
+
     >.user-right-btn {
         position: relative;
-        > button{
+
+        >button {
             border: none;
             cursor: pointer;
             background-color: transparent;
         }
-        > div{
+
+        >div {
             width: 260px;
             z-index: 9;
             display: flex;
@@ -140,7 +156,8 @@
             -moz-border-radius: 8px;
             -ms-border-radius: 8px;
             -o-border-radius: 8px;
-            > button{
+
+            >button {
                 width: 100%;
                 display: flex;
                 color: #333333;
@@ -156,26 +173,31 @@
                 -moz-border-radius: 8px;
                 -ms-border-radius: 8px;
                 -o-border-radius: 8px;
-                > div{
+
+                >div {
                     gap: 5px;
                     display: flex;
                     align-items: center;
                 }
-                > img{
+
+                >img {
                     height: 16px;
                 }
             }
         }
-        .hide-download-type{
+
+        .hide-download-type {
             display: none;
         }
     }
 }
-.user-details-order{
+
+.user-details-order {
     margin-top: 50px;
 }
+
 /* add sub admin */
-.add-presentation{
+.add-presentation {
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -185,7 +207,7 @@
     cursor: pointer;
     border: none;
     color: white;
-    padding: 10px ;
+    padding: 10px;
     background-color: #04A488;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -193,4 +215,3 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
 }
-

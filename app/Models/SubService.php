@@ -25,7 +25,7 @@ class SubService extends Model
     // Define the relationship with the Service model (inverse of hasMany)
     public function service()
     {
-        return $this->belongsTo(Service::class, 'service_id');  // 'service_id' is the foreign key
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
     public function faqs()
@@ -36,5 +36,14 @@ class SubService extends Model
     public function activities()
     {
         return $this->hasMany(Activity::class, 'sub_service_id');
+    }
+
+    public function advancePrice()
+    {
+        return $this->hasMany(advancePrice::class, 'sub_service_id');
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'product_id');
     }
 }

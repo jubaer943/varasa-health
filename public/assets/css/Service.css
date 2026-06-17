@@ -1,9 +1,10 @@
-.all-service{
+.all-service {
     gap: 20px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    > .service{
+
+    >.service {
         width: 270px;
         padding: 20px;
         background-color: #FFF;
@@ -13,7 +14,8 @@
         -moz-border-radius: 8px;
         -ms-border-radius: 8px;
         -o-border-radius: 8px;
-        > .service-img{
+
+        >.service-img {
             width: 100%;
             height: 170px;
             cursor: pointer;
@@ -27,7 +29,8 @@
             -moz-border-radius: 8px;
             -ms-border-radius: 8px;
             -o-border-radius: 8px;
-            > a{
+
+            >a {
                 top: 4%;
                 right: 4%;
                 height: 35px;
@@ -44,22 +47,27 @@
                 -ms-border-radius: 100px;
                 -o-border-radius: 100px;
             }
-            .edit-desable{
+
+            .edit-desable {
                 background-color: #D2D2D2;
             }
         }
-        > .service-body{
+
+        >.service-body {
             text-align: center;
-            > h4{
+
+            >h4 {
                 font-size: 14px;
                 margin-top: 15px;
                 color: #41484D;
                 font-weight: 600;
             }
-            .sub-title-disable{
+
+            .sub-title-disable {
                 color: #D2D2D2;
             }
-            > p{
+
+            >p {
                 margin-top: 5px;
                 display: flex;
                 font-size: 16px;
@@ -67,101 +75,121 @@
                 font-weight: 600;
                 align-items: center;
                 justify-content: center;
-                > img{
+
+                >img {
                     height: 20px;
                     margin-right: 5px;
                 }
             }
-            .sub-des-disable{
+
+            .sub-des-disable {
                 opacity: 0.5;
             }
         }
-        .service-btns > button,
-        > button{
+
+        .service-btns>button,
+        >button {
             padding: 10px 40px;
             margin-top: 20px;
         }
-        .service-btns{
+
+        .service-btns {
             margin-top: 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            > button{
+
+            >button {
                 margin-top: 0px;
                 padding: 10px !important;
             }
         }
     }
 }
-.NurseCaregiver > div > button{
+
+.NurseCaregiver>div>button {
     padding: 10px !important;
     margin-top: 10px !important;
     font-size: 12px !important;
 }
-.NurseCaregiver-switch{
+
+.NurseCaregiver-switch {
     display: flex;
     align-items: end;
     justify-content: end;
 }
-.NurseCaregiver-top{
+
+.NurseCaregiver-top {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
     justify-content: space-between;
 }
+
 .disabled-service {
-    > .service-img{
-        cursor:auto !important;
-        background-color:#F7F7F7 !important;
-        > a{
-            background-color:#D2D2D2 !important;
-            cursor:auto !important;
+    >.service-img {
+        cursor: auto !important;
+        background-color: #F7F7F7 !important;
+        filter: grayscale(1);
+
+        >a {
+            background-color: #D2D2D2 !important;
+            cursor: auto !important;
         }
     }
-    > div{
-        >h4{
-            color:#CCCCCC !important;
+
+    >div {
+        >h4 {
+            color: #CCCCCC !important;
         }
-        >p{
-            color:#CCCCCC !important;
+
+        >p {
+            color: #CCCCCC !important;
         }
     }
-    > div > button,
-    > button{
+
+    >div>button,
+    >button {
         background-color: #CCCCCC;
-        cursor:auto !important;
+        cursor: auto !important;
     }
 }
-.sub_nurse_submit > a{
+
+.sub_nurse_submit>a {
     color: #ffff;
     text-decoration: none;
 }
+
 /* service end */
 
 
 /* Edit Doctor Video Consultation start */
-.Video-Consultation{
-    > h1{
+.Video-Consultation {
+    >h1 {
         font-size: 25px;
         color: #293034;
         font-weight: 600;
     }
-    > form{
-        > div > label{
+
+    >form {
+        >div>label {
             cursor: pointer;
         }
-        > div{
+
+        >div {
             margin-top: 25px;
-            > label,
-            > div > label,
-            > div > div > label{
+
+            >label,
+            >div>label,
+            >div>div>label {
                 font-size: 14px;
                 font-weight: 400;
                 color: #41484D;
             }
         }
-        .img-upload-section{
-            > div{
+
+        .img-upload-section {
+            >div {
                 cursor: pointer;
                 width: 120px;
                 height: 110px;
@@ -176,7 +204,8 @@
                 -moz-border-radius: 8px;
                 -ms-border-radius: 8px;
                 -o-border-radius: 8px;
-                > div{
+
+                >div {
                     width: 50px;
                     height: 50px;
                     display: flex;
@@ -191,11 +220,12 @@
                 }
             }
         }
-        .all-faq > div > div > input,
-        .all-activities > div > div > input,
-        .input-section > input,
-        .input-section > div > input,
-        .input-section > div > div > input{
+
+        .all-faq>div>div>input,
+        .all-activities>div>div>input,
+        .input-section>input,
+        .input-section>div>input,
+        .input-section>div>div>input {
             display: block;
             width: 340px;
             height: 45px;
@@ -212,29 +242,34 @@
             -ms-border-radius: 8px;
             -o-border-radius: 8px;
         }
-        .input-section > input::placeholder,
-        .input-section > div > input::placeholder,
-        .input-section > div > div > input::placeholder{
+
+        .input-section>input::placeholder,
+        .input-section>div>input::placeholder,
+        .input-section>div>div>input::placeholder {
             color: #716c6c;
             font-weight: 500;
-            font-size: 14px ;
+            font-size: 14px;
         }
-        .active_input_area{
+
+        .active_input_area {
             margin-top: 20px;
         }
+
         .all-faq,
-        .all-activities{
+        .all-activities {
             display: flex !important;
             align-items: start !important;
             justify-content: start !important;
             flex-direction: column !important;
-            > div > div{
+
+            >div>div {
                 gap: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                > div{
-                    > button{
+
+                >div {
+                    >button {
                         padding: 10px 30px;
                         border: none;
                         height: 45px;
@@ -248,30 +283,35 @@
                         -ms-border-radius: 5px;
                         -o-border-radius: 5px;
                     }
-                    > .edit-btn{
+
+                    >.edit-btn {
                         color: #029687;
                         border: 1.8px solid #029687;
                         background-color: transparent;
                     }
-                    > .delete-btn{
+
+                    >.delete-btn {
                         color: #FFF;
                         background-color: #B3261E;
                     }
                 }
             }
         }
-        .all-faq  > div {
-            flex-direction: column ;
+
+        .all-faq>div {
+            flex-direction: column;
         }
+
         .FAQ-section,
-        .FAQ-section > div,
-        .Activities-section{
-            > div{
+        .FAQ-section>div,
+        .Activities-section {
+            >div {
                 gap: 10px;
                 display: flex;
                 align-items: end;
             }
-            > div > button{
+
+            >div>button {
                 padding: 10px 30px;
                 color: #FFF;
                 border: none;
@@ -287,9 +327,11 @@
                 -o-border-radius: 5px;
             }
         }
-        >div > a,
-        > button{
-            margin-top: 50px !important;
+
+        >div>a,
+        >button,
+        .saveBtn {
+            margin-top: 30px !important;
             padding: 10px 100px;
             color: #FFF;
             border: none;
@@ -309,26 +351,29 @@
 }
 
 
-.Advanced-Service > .SERVICE-CHECK{
+.Advanced-Service>.SERVICE-CHECK {
     gap: 10px;
     display: flex;
     align-items: center;
-    > .AdvancedService{
+
+    >.AdvancedService {
         height: 20px;
         width: 20px;
         cursor: pointer;
         accent-color: #029687;
     }
-    > label{
+
+    >label {
         cursor: pointer;
     }
 }
 
 /* advance-service-details start */
-.advance-service-details{
+.advance-service-details {
     display: none;
     margin-top: 20px;
-    > button{
+
+    >button {
         padding: 10px 30px;
         color: #FFF;
         border: none;
@@ -344,9 +389,10 @@
         -o-border-radius: 5px;
     }
 }
-.advanced-service-info > div,
-.advance-service-details > input,
-.advance-service-details > select{
+
+.advanced-service-info>div,
+.advance-service-details>input,
+.advance-service-details>select {
     width: 150px;
     height: 45px;
     padding: 10px;
@@ -362,7 +408,8 @@
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
 }
-.active-service-details{
+
+.active-service-details {
     gap: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -371,11 +418,12 @@
 }
 
 /* order-info start*/
-.advanced-service-info{
+.advanced-service-info {
     display: none;
     margin-top: 20px;
     align-items: center;
-    > button{
+
+    >button {
         padding: 10px 30px;
         height: 45px;
         font-weight: 550;
@@ -387,18 +435,21 @@
         -ms-border-radius: 5px;
         -o-border-radius: 5px;
     }
-    > .edit-order-info{
+
+    >.edit-order-info {
         color: #029687;
         background-color: transparent;
         border: 1.6px solid #029687;
     }
-    > .delete-order-info{
+
+    >.delete-order-info {
         color: #FFF;
         background-color: #B3261E;
         border: none;
     }
 }
-.active-service_info{
+
+.active-service_info {
     gap: 20px;
     display: flex;
 }
@@ -409,22 +460,25 @@
 
 
 /* Nurse Caregiver & Senior Care */
-.service-fee-details{
+.service-fee-details {
     gap: 100px;
     display: none;
-    > div{
-        > div{
+
+    >div {
+        >div {
             gap: 15px;
             margin-top: 15px;
             display: flex;
             align-items: center;
-            > .service-check{
+
+            >.service-check {
                 height: 20px;
                 width: 20px;
                 cursor: pointer;
                 accent-color: #029687;
             }
-            > .service-info{
+
+            >.service-info {
                 padding: 15px;
                 width: 160px;
                 outline: none;
@@ -439,58 +493,67 @@
                 -ms-border-radius: 8px;
                 -o-border-radius: 8px;
             }
-            > .service-info::placeholder{
+
+            >.service-info::placeholder {
                 color: #898f92;
             }
         }
     }
 }
-.active_NurseCaregiver{
+
+.active_NurseCaregiver {
     display: flex;
 }
+
 /* Nurse Caregiver & Senior Care end */
 
 /* diagnostic-service start */
-.diagnostic-service{
-    .service-body{
+.diagnostic-service {
+    .service-body {
         display: flex;
         align-items: start;
         margin-top: -15px;
         justify-content: space-between;
-        >p{
+
+        >p {
             margin-top: 15px !important;
         }
     }
-    > .service-btns{
-        > div{
+
+    >.service-btns {
+        >div {
             margin-top: 12px;
         }
     }
 }
+
 /* diagnostic-service end */
 
 /* urin_test start */
-.urin_test{
-    >h1{
+.urin_test {
+    >h1 {
         color: #293034;
         font-weight: 600;
         font-size: 30px;
     }
-    > form{
-        >.TestName{
+
+    >form {
+        >.TestName {
             max-width: 400px;
             margin-top: 30px;
         }
+
         >.TestName,
-        .urin-test-bottom  > .TestPrice,
-        .urin-test-bottom> .HospitalName,
-        .urin-test-bottom> .Test-btns{
-            >label{
+        .urin-test-bottom>.TestPrice,
+        .urin-test-bottom>.HospitalName,
+        .urin-test-bottom>.Test-btns {
+            >label {
                 color: #41484D;
                 font-size: 16px;
                 font-weight: 600;
             }
-            > input{
+
+            >input {
                 display: block;
                 width: 100%;
                 height: 45px;
@@ -507,42 +570,51 @@
                 -o-border-radius: 8px;
             }
         }
-        .TestName > input,
-        .urin-test-one > div > input{
+
+        .TestName>input,
+        .urin-test-one>div>input {
             margin-top: 8px;
         }
-        .urin-test-bottom{
+
+        .urin-test-bottom {
             gap: 15px;
             margin-top: 15px;
             display: flex;
             align-items: center;
             justify-content: start;
-            > .TestPrice,
-            > .HospitalName,
-            > .Test-btns{
-                > input{
+
+            >.TestPrice,
+            >.HospitalName,
+            >.Test-btns {
+                >input {
                     width: 100%;
                 }
             }
-            > .TestPrice{
+
+            >.TestPrice {
                 width: 200px;
             }
-            > .HospitalName{
+
+            >.HospitalName {
                 width: 300px;
             }
-            > .Test-btns-top{
+
+            >.Test-btns-top {
                 margin-top: 18px;
-                > .button{
+
+                >.button {
                     border: none !important;
-                    background-color:#029687 !important;
+                    background-color: #029687 !important;
                 }
             }
-            > .Test-btns{
+
+            >.Test-btns {
                 gap: 20px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                > button{
+
+                >button {
                     height: 45px;
                     min-width: 100px;
                     padding: 10px 20px;
@@ -558,27 +630,32 @@
                     -ms-border-radius: 8px;
                     -o-border-radius: 8px;
                 }
-                > button:first-child{
+
+                >button:first-child {
                     width: 130px;
                     border: 3px dotted #029687;
                 }
-                > .edit{
-                    color:#029687;
+
+                >.edit {
+                    color: #029687;
                     border: 1.6px solid #029687;
                 }
-                > button:last-child{
+
+                >button:last-child {
                     color: #FFFF;
                     background: #B3261E;
                     border: 3px dotted #B3261E;
                 }
-                .delete-btn{
+
+                .delete-btn {
                     border: none !important;
-                    background-color:#029687 !important;
+                    background-color: #029687 !important;
                 }
             }
         }
+
         .diagnostic-add-btn,
-        .test-urin-save-btn{
+        .test-urin-save-btn {
             padding: 15px 80px;
             margin-top: 30px;
             border: none;
@@ -590,37 +667,45 @@
             -ms-border-radius: 8px;
             -o-border-radius: 8px;
         }
-        .diagnostic-add-btn{
+
+        .diagnostic-add-btn {
             cursor: pointer;
             margin-top: 50px;
-            background-color: #029687 ;
+            background-color: #029687;
         }
-        .test-urin-save-btn{
+
+        .test-urin-save-btn {
             background-color: #D2D2D2;
         }
     }
 }
+
 /* urin_test end */
 
 
 /* diagnostic-collection start */
-.diagnostic-collection{
+.diagnostic-collection {
     width: 520px !important;
-    > .service-body{
-        >h4{
+
+    >.service-body {
+        >h4 {
             font-size: 18px !important;
         }
-        > div{
+
+        >div {
             margin-top: 10px;
-            >p{
+
+            >p {
                 color: #4D565C;
             }
         }
-        > div{
+
+        >div {
             gap: 10px;
             display: flex;
             align-items: center;
-            > a{
+
+            >a {
                 padding: 8px;
                 display: flex;
                 cursor: pointer;
@@ -635,25 +720,28 @@
             }
         }
     }
-    > .service-btns{
+
+    >.service-btns {
         width: 100%;
         display: flex;
         margin-top: 30px !important;
         align-items: start !important;
         justify-content: start !important;
         flex-direction: column;
-        > div{
+
+        >div {
             gap: 10px;
             min-width: 80%;
             display: flex;
-            > div{
+
+            >div {
                 height: 40px;
                 display: flex;
                 color: #FFF;
                 cursor: pointer;
                 font-size: 14px;
                 font-weight: 500;
-                align-items:center;
+                align-items: center;
                 justify-content: center;
                 background-color: #029687;
                 border-radius: 8px;
@@ -662,18 +750,22 @@
                 -ms-border-radius: 8px;
                 -o-border-radius: 8px;
             }
-            > div:first-child{
+
+            >div:first-child {
                 width: 100px;
                 background-color: #FFFF;
                 border: 2px dotted #029687;
             }
-            > .details{
+
+            >.details {
                 width: 250px;
             }
-            > div:last-child{
+
+            >div:last-child {
                 width: 100px;
             }
         }
     }
 }
+
 /* diagnostic-collection end */

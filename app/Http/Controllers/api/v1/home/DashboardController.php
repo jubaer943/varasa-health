@@ -14,23 +14,23 @@ class DashboardController extends Controller
     {
         $banners = Campaign::all();
         $services = Service::all();
-    
+
         $data = [
             'campaign' => [],
             'services' => []
         ];
-    
+
         foreach ($banners as $banner) {
             if ($banner->status == 1) {
                 $data['campaign'][] = [
                     'id' => $banner->id,
                     'name' => $banner->name,
-                    'campaignImage' => url($banner->campaign_banner),
+                    'campaignImage' => url('storage/' . $banner->campaign_banner),
                     'discount' => $banner->discount,
                 ];
             }
         }
-    
+
         foreach ($services as $service) {
             $data['services'][] = [
                 'id' => $service->id,
@@ -38,7 +38,7 @@ class DashboardController extends Controller
                 'banner' => url('assets/images/' . $service->banner),
             ];
         }
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Dashboard Data retrieved successfully!',
@@ -47,6 +47,4 @@ class DashboardController extends Controller
             'description' => null,
         ]);
     }
-
-    
 }

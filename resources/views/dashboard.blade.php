@@ -7,27 +7,27 @@
         <div class="dashboard-top">
             <div>
                 <p>Active Orders</p>
-                <p>0</p>
+                <p> {{ $activeOrders }} </p>
             </div>
             <div class="pending-order">
                 <p>Pending Orders</p>
-                <p>0</p>
+                <p> {{ $pendingOrders }} </p>
             </div>
             <div>
                 <p>Complete Orders</p>
-                <p>0</p>
+                <p> {{ $completedOrders }} </p>
             </div>
             <div>
                 <p>Our Services</p>
-                <p>0</p>
+                <p> {{ $services }} </p>
             </div>
             <div>
                 <p>Users</p>
-                <p>0</p>
+                <p> {{ $users }} </p>
             </div>
             <div>
                 <p>Professionals</p>
-                <p>0</p>
+                <p>{{ $professionals }}</p>
             </div>
         </div>
         <div class="dashboard">
@@ -144,334 +144,195 @@
             </div>
         </div>
 
-        <h1 class="dashboard-order">Orders</h1>
-        <div class="search_refresh">
-            <div>
-                <img src="assets/images/search.png" alt="varasa search icon">
-                <input type="text" name="search" id="search" placeholder="Search" autofocus>
+        @if (Auth::user()->permissions->isEmpty())
+            <h1 class="dashboard-order">Orders</h1>
+            <div class="search_refresh">
+                <div>
+                    <img src="assets/images/search.png" alt="varasa search icon">
+                    <input type="text" name="search" id="search" placeholder="Search" autofocus>
+                </div>
+                <button class="Refresh">
+                    <img src="assets/images/refresh.png" alt="varasa refresh icon">
+                    <p>Refresh</p>
+                </button>
             </div>
-            <button class="Refresh">
-                <img src="assets/images/refresh.png" alt="varasa refresh icon">
-                <p>Refresh</p>
-            </button>
-        </div>
 
-        <!-- active/pending/complete button -->
-        <div class="order-type-btn">
-            <div class="lefts-btn">
-                <button>Active</button>
-                <button>Pending</button>
-                <button>Complete</button>
-            </div>
-            <div class="right-btns">
-                <div>
-                    <p>Date</p>
-                    <input type="date" name="date" id="date">
-                </div>
-                <div>
-                    <p>Payment Type</p>
-                    <select name="Payment-Type" id="Payment-Type">
-                        <option value="Payment Type">Payment Type</option>
-                        <option value="Payment Type">Payment Type</option>
-                        <option value="Payment Type">Payment Type</option>
-                        <option value="Payment Type">Payment Type</option>
-                    </select>
-                </div>
-                <div>
-                    <p>Area Wise</p>
-                    <select name="Select-Area" id="Select-Area">
-                        <option value="Select Area">Select Area</option>
-                        <option value="Payment Type">Payment Type</option>
-                        <option value="Payment Type">Payment Type</option>
-                        <option value="Payment Type">Payment Type</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+            <!-- active/pending/complete button -->
+            <div class="order-type-btn">
+                <div class="lefts-btn">
+                    <button data-status="1">Active</button>
+                    <button data-status="0">Pending</button>
+                    <button data-status="2">Complete</button>
 
-        <!-- order box start -->
-        <h4 class="card-title " style="margin-top: 2rem;">No order Found</h4>
-        <!-- <div class="Order-box-section">
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
+                </div>
+                <div class="right-btns">
+                    <div>
+                        <p>Date</p>
+                        <input type="date" name="date" id="date">
                     </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
+                    <div>
+                        <p>Payment Type</p>
+                        <select name="Payment-Type" id="Payment-Type">
+                            <option value="Payment Type" selected>All</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Bkash">Bkash</option>
+                            <option value="Nagad">Nagad</option>
+                            <option value="Card">Card</option>
+                            <!-- Add actual payment types here -->
+                        </select>
                     </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
+                    <div>
+                        <p>Area Wise</p>
+                        <select name="Select-Area" id="Select-Area">
+                            <option value="Select Area">Select Area</option>
+                        </select>
                     </div>
                 </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
+            </div>
+
+            <!-- order box start -->
+            <div class="Order-box-section">
+            </div>
+        @else
+            @php
+                $has_permission = Auth::user()->permissions->first();
+            @endphp
+            @if ($has_permission->orders == 1)
+                <h1 class="dashboard-order">Orders</h1>
+                <div class="search_refresh">
+                    <div>
+                        <img src="assets/images/search.png" alt="varasa search icon">
+                        <input type="text" name="search" id="search" placeholder="Search" autofocus>
                     </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
+                    <button class="Refresh">
+                        <img src="assets/images/refresh.png" alt="varasa refresh icon">
+                        <p>Refresh</p>
+                    </button>
+                </div>
+
+                <!-- active/pending/complete button -->
+                <div class="order-type-btn">
+                    <div class="lefts-btn">
+                        <button data-status="1">Active</button>
+                        <button data-status="0">Pending</button>
+                        <button data-status="2">Complete</button>
+
                     </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
+                    <div class="right-btns">
                         <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
+                            <p>Date</p>
+                            <input type="date" name="date" id="date">
                         </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
+                        <div>
+                            <p>Payment Type</p>
+                            <select name="Payment-Type" id="Payment-Type">
+                                <option value="Payment Type" selected>All</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Bkash">Bkash</option>
+                                <option value="Nagad">Nagad</option>
+                                <option value="Card">Card</option>
+                                <!-- Add actual payment types here -->
+                            </select>
+                        </div>
+                        <div>
+                            <p>Area Wise</p>
+                            <select name="Select-Area" id="Select-Area">
+                                <option value="Select Area">Select Area</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
+
+                <!-- order box start -->
+                <div class="Order-box-section">
                 </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="Order-box">
-                    <div class="order-time">
-                        <p>Order ID : <b>A240125-009</b></p>
-                        <div>
-                            <p>Order Date : <b>May 11, 2020 . 07:44 PM</b></p>
-                            <p>Service Time: <b>May 11, 2024 - May 30, 2024</b></p>
-                        </div>
-                    </div>
-                    <div class="order-img">
-                        <img src="assets/images/profile icon.png" alt="">
-                        <p>Nursing Service Weekly <br>7 days - 12 hours</p>
-                    </div>
-                    <hr class="order-hr">
-                    <div class="order-amount">
-                        <div>
-                            <p>Payment: <b>Cash</b></p>
-                            <p>Amount : <b>2000 BDT</b></p>
-                        </div>
-                        <a href="OrderDetails.html">
-                            <p>View Order</p>
-                        </a>
-                    </div>
-                </div>
-            </div> -->
+            @endif
+        @endif
         <!-- order box end -->
     </div>
     <!-- page section end -->
     </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            function fetchOrders() {
+                let status = $(".order-type-btn button.active").attr("data-status") || 0;
+                let paymentType = $("#Payment-Type").val();
+                let area = $("#Select-Area").val();
+                let search = $("#search").val();
+                let date = $("#date").val();
+
+                $.ajax({
+                    url: "{{ route('order.index') }}",
+                    type: "GET",
+                    data: {
+                        status: status,
+                        date: date,
+                        payment_type: paymentType,
+                        area: area,
+                        search: search
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                    },
+                    success: function(response) {
+                        if (response.orders.length === 0) {
+                            $(".Order-box-section").html(
+                                '<h4 class="card-title " style="margin-top: 2rem;">No order Found</h4>'
+                            );
+                        } else {
+                            console.log(response);
+
+                            $(".Order-box-section").html(response.orders.map(order => `
+                        <div class="Order-box">
+                            <div class="order-time">
+                                <p>Order ID : <b>${order.order_number}</b></p>
+                                <div>
+                                    <p>Order Date : <b>${new Date(order.created_at).toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }).replace(',', '')}</b></p>
+                                    <p>Service Time: <b>${(h => `${h % 12 || 12}:${order.schedule?.start_time.split(":")[1]} ${h >= 12 ? "PM" : "AM"}`)(parseInt(order.schedule?.start_time))} - ${(h => `${h % 12 || 12}:${order.schedule?.end_time.split(":")[1]} ${h >= 12 ? "PM" : "AM"}`)(parseInt(order.schedule?.end_time))}</b></p>
+                                </div>
+                            </div>
+                            <div class="order-img">
+                                <img src="assets/images/profile icon.png" alt="">
+                                <p>${order.service?.name}  <br>${order.advance_price?.service ?? ''}</p>
+                            </div>
+                            <hr class="order-hr">
+                            <div class="order-amount">
+                                <div>
+                                    <p>Payment: <b>${order.payment_method ?? 'cash'}</b></p>
+                                    <p>Amount : <b>${order.price} BDT</b></p>
+                                </div>
+                                <a href="OrderDetails.html">
+                                    <p>View Order</p>
+                                </a>
+                            </div>
+                        </div>
+                `).join(""));
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error("Error:", xhr.responseText);
+                    }
+                });
+            }
+
+            // Mark first button as active on page load
+            $(".order-type-btn button").first().addClass("active");
+
+            // Handle filter button click
+            $(".order-type-btn button").click(function() {
+                $(".order-type-btn button").removeClass("active");
+                $(this).addClass("active");
+                fetchOrders();
+            });
+
+            // Handle input changes
+            $("#date, #Payment-Type, #Select-Area, #search").on("change keyup", function() {
+                fetchOrders();
+            });
+
+            // Initial fetch on page load
+            fetchOrders();
+        });
+    </script>
 @endsection

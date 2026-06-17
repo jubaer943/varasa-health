@@ -14,25 +14,6 @@ if (Refresh) {
 }
 // ***** preloader and refresh end *****
 
-// input box design
-const presentation_label = document.querySelectorAll(".presentation-label");
-if (presentation_label) {
-    presentation_label.forEach((elem) => {
-        let check_type = "green";
-        elem.innerHTML = `<img class="admin-check-mark" src="assets/images/check mark green.png" alt="check mark">`;
-
-        elem.addEventListener("click", () => {
-            if (check_type == "green") {
-                elem.innerHTML = `<img class="admin-check-mark" src="assets/images/check mark white.png" alt="check mark">`;
-                check_type = "white";
-            } else {
-                elem.innerHTML = `<img class="admin-check-mark" src="assets/images/check mark green.png" alt="check mark">`;
-                check_type = "green";
-            }
-        });
-    });
-}
-
 // navbar section start
 const nav_link = document.querySelectorAll(".nav-link");
 const nav_img = document.querySelectorAll(".nav-img");
@@ -66,7 +47,6 @@ if (nav_link.length > 0) {
         } else {
             elemSegments = elemPath.split("/").filter(Boolean);
         }
-        console.log(elemSegments);
 
 
         // Compare the base path with the element's path
@@ -180,11 +160,11 @@ function AddClassFunc(ElemSelector1, ElemSelector2, ClassToggle, operation) {
             } else if (operation == "remove") {
                 element2.classList.remove(ClassToggle);
             } else {
-                console.log("Invalid operation");
+                // console.log("Invalid operation");
             }
         });
     } else {
-        console.log("Class is not found");
+        // console.log("Class is not found");
     }
 }
 
@@ -219,10 +199,9 @@ function UploadFunc(ElemSelector1, ElemSelector2) {
     const element2 = document.querySelector(ElemSelector2);
 
     if (element1 && element2) {
-        element1.addEventListener("click", (e) => {
-            e.preventDefault();
+        element1.addEventListener("click", (() => {
             element2.click();
-        });
+        }));
     }
 }
 UploadFunc(".upload-btn1", ".file1");
@@ -250,13 +229,21 @@ function ToggleFunc(ElemSelector1, ElemSelector2, operation) {
 ToggleFunc(".notification", ".notification-box");
 ToggleFunc(".NurseCaregiver", ".service-fee-details", "d_flex");
 
-const NurseCaregiver_switch = document.querySelector(".NurseCaregiver-switchs");
-const NurseCaregiver = document.querySelector(".NurseCaregiver-service");
-if (NurseCaregiver_switch) {
-    NurseCaregiver_switch.addEventListener("click", () => {
-        NurseCaregiver.classList.toggle("disabled-service");
+const NurseCaregiver_switches = document.querySelectorAll(".NurseCaregiver-switchs");
+
+document.querySelectorAll(".NurseCaregiver-switchs").forEach((switchElement) => {
+    switchElement.addEventListener("click", function () {
+        // Find the closest parent service div and toggle the class only for it
+        const serviceElement = this.closest(".service");
+
+        if (serviceElement) {
+            serviceElement.classList.toggle("disabled-service");
+        }
     });
-}
+});
+
+
+
 // ***** toggle function end *****
 
 // *********** our service section start ***********
@@ -272,9 +259,9 @@ function AddActivities() {
     newItem.classList.add("item");
 
     newItem.innerHTML = `
-        <input type="text" name="Activities[]" class="activities-write" value="${Activities_inp}"  />
+    <input type="text" name="Activities[]" class="activities-write" value="${Activities_inp}" readonly>
         <div class="activities-btns">
-            <button type="button" class="edit-btn" onclick="editItem(this)">Edit</button>
+            <button type="button" class="edit-btn"  onclick="editItem(this)">Edit</button>
             <button type="button" class="delete-btn" onclick="deleteItem(this)">Delete</button>
         </div>
     `;
@@ -296,22 +283,23 @@ if (activities_btn) {
     });
 }
 function editItem(button) {
-    const activities_write = document.querySelectorAll(".activities-write");
+    const activities_write = button.closest('.item').querySelector('.activities-write');
 
-    activities_write.forEach((elem) => {
-        if (elem.disabled) {
-            elem.disabled = false;
-            button.textContent = "Save";
-        } else {
-            elem.disabled = true;
-            button.textContent = "Edit";
-        }
-    });
+    if (activities_write.readOnly) {
+        activities_write.readOnly = false;
+        button.textContent = "Save";
+    } else {
+        activities_write.readOnly = true;
+        button.textContent = "Edit";
+    }
 }
-function deleteItem() {
-    const activities_btns = document.querySelector(".activities-btns");
-    const item = activities_btns.parentElement;
-    activities.removeChild(item);
+
+
+function deleteItem(button) {
+    const item = button.closest('.item');
+    if (item) {
+        item.remove();
+    }
 }
 // add activities section end
 
@@ -327,8 +315,8 @@ function AddFAQ() {
     newItem.classList.add("item");
 
     newItem.innerHTML = `
-        <input type="text" name="FAQ[question][]" class="faq-question" value="${FAQ_input}"  />
-        <input type="text" name="FAQ[answer][]" class="faq-answer" value="${Answer_input}" />
+        <input type="text" name="FAQ[question][]" class="faq-question" value="${FAQ_input}"  readonly/>
+        <input type="text" name="FAQ[answer][]" class="faq-answer" value="${Answer_input}" readonly/>
         <div class="faq-btns">
             <button type="button" class="edit-btn" onclick="editFAQ(this)">Edit</button>
             <button type="button" class="delete-btn" onclick="deleteFAQ(this)">Delete</button>
@@ -351,24 +339,29 @@ if (FAQ_btn) {
 }
 
 function editFAQ(button) {
-    const faq_question = document.querySelector(".faq-question");
-    const faq_answer = document.querySelector(".faq-answer");
+    const faqItem = button.closest('.faq');
+    const faq_question = faqItem.querySelector('.faq-question');
+    const faq_answer = faqItem.querySelector('.faq-answer');
 
-    if (faq_question.disabled && faq_answer.disabled) {
-        faq_question.disabled = false;
-        faq_answer.disabled = false;
+    if (faq_question.readOnly && faq_answer.readOnly) {
+        faq_question.readOnly = false;
+        faq_answer.readOnly = false;
         button.textContent = "Save";
     } else {
-        faq_question.disabled = true;
-        faq_answer.disabled = true;
+        faq_question.readOnly = true;
+        faq_answer.readOnly = true;
         button.textContent = "Edit";
     }
 }
-function deleteFAQ() {
-    const faq_btns = document.querySelector(".faq-btns");
-    const item = faq_btns.parentElement;
-    faq.removeChild(item);
+
+
+function deleteFAQ(button) {
+    const item = button.closest('.item');
+    if (item) {
+        item.remove();
+    }
 }
+
 // add FAQ section end
 // *********** our service section end ***********
 
@@ -395,7 +388,7 @@ function AddClassFunction(
                     if (img) {
                         img.src = "assets/images/arrow-right-green.png";
                     } else {
-                        console.log("Image is not found");
+                        // console.log("Image is not found");
                     }
                 });
                 // class remove
@@ -407,13 +400,13 @@ function AddClassFunction(
                 if (img) {
                     img.src = "assets/images/arrow-right-white.png";
                 } else {
-                    console.log("Image is not found");
+                    // console.log("Image is not found");
                 }
                 // class add
             });
         });
     } else {
-        console.log("Class is not found");
+        // console.log("Class is not found");
     }
 }
 
@@ -432,13 +425,20 @@ AddClassFunction(
 );
 
 // setting page contact section
-const contact_edit = document.querySelector(".contact-edit");
+const contact_edit = document.querySelectorAll(".contact-edit");
 const contact_input = document.querySelector(".contact-input");
 const save = document.querySelector(".contact-save");
+contact_edit.addEventListener('click', () => {
+    console.log('click');
+
+})
+
 if (contact_edit) {
     contact_input.classList.add("input-opacity");
     save.classList.add("save-opacity");
     contact_edit.addEventListener("click", () => {
+        console.log('clicke');
+
         if (contact_input.disabled) {
             contact_input.disabled = false;
             save.disabled = false;
@@ -451,6 +451,9 @@ if (contact_edit) {
             save.classList.add("save-opacity");
         }
     });
+} else {
+    console.log('not found');
+
 }
 
 // model show or hide
@@ -483,3 +486,83 @@ function HideModel(element1, element2) {
 }
 HideModel(".cancel-logout", ".logout-success");
 HideModel(".close", ".nurse-service");
+
+
+function previewImage(fileInputClass, previewImageClass) {
+    const fileInput = document.getElementsByClassName(fileInputClass)[0];
+    const previewImage = document.getElementsByClassName(previewImageClass)[0];
+
+    if (fileInput && previewImage) {
+
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    previewImage.setAttribute('width', 100);
+                    previewImage.setAttribute('height', 100);
+                    previewImage.style.objectFit = 'contain';
+                    previewImage.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+}
+previewImage('file1', 'preview1');
+previewImage('file2', 'preview2');
+
+
+
+// add diagnostic start
+// const diagnostic_btn = document.querySelector('.diagnostic-btn');
+// const diagnostic = document.querySelector('.diagnostic');
+
+
+function editDiagnostic(button) {
+    const faq_question = document.querySelector('.content_name')
+    const faq_answer = document.querySelector('.content_price')
+
+    if (faq_question.disabled && faq_answer.disabled) {
+        faq_question.disabled = false;
+        faq_answer.disabled = false;
+        button.textContent = 'Save';
+    } else {
+        faq_question.disabled = true;
+        faq_answer.disabled = true;
+        button.textContent = 'Edit';
+    }
+}
+// function deleteDiagnostic() {
+//     const faq_btns = document.querySelector('.diagnostic-content')
+//     const item = faq_btns.parentElement;
+//     document.querySelector('.diagnostic').removeChild(item);
+// }
+// add diagnostic start
+
+
+// edit privacy policy (setting.html)
+// function editSetting(editBtn, policyText, policyTextArea, saveBtn) {
+//     const policy_edit_btn1 = document.querySelector(editBtn);
+//     const policy_text1 = document.querySelectorAll(policyText);
+//     const policy_text_area1 = document.querySelector(policyTextArea);
+//     const policy_save_btn1 = document.querySelector(saveBtn);
+//     policy_edit_btn1.addEventListener("click", (() => {
+//         let combinedText = "";
+//         policy_text1.forEach((text) => {
+//             combinedText += text.innerText + "\n";
+//         });
+//         policy_text_area1.innerHTML = `<textarea class="policy_textarea">${combinedText}</textarea>`;
+//         policy_save_btn1.disabled = false;
+//         policy_save_btn1.classList.add('enabled-btn')
+//     }));
+// }
+// edit button --> policy-text --> policy-text parent --> save button
+// editSetting('.policy-edit-btn1', '.policy-text1', '.policy_text_area1', '.policy-save-btn1')
+// editSetting('.policy-edit-btn2', '.policy-text2', '.policy_text_area2', '.policy-save-btn2')
+// editSetting('.AboutUs-edit-btn1', '.AboutUs-text1', '.AboutUs_text_area1', '.AboutUs-save-btn1');
+// editSetting('.AboutUs-edit-btn2', '.AboutUs-text2', '.AboutUs_text_area2', '.AboutUs-save-btn2');
+

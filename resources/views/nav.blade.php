@@ -1,82 +1,184 @@
+<div class="nurse-service-success logout-success">
+    <div>
+        <div>
+            <div class="cross-icon">
+                <img class="success-close1 cancel-logout" src="{{ asset('assets/images/cross-red.png') }}"
+                    alt="varasa red cross icon">
+            </div>
+            <div class="success-details">
+                <img src="{{ asset('assets/images/reset success.png') }}" alt="varasa success icon">
+                <h1>Log Out</h1>
+                <p>Are you sure want to Log Out?</p>
+                <div class="logout-btns">
+                    <button class="success-close2 cancel-logout">Cancel</button>
+                    <button class="success-close2"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log
+                        Out</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+</div>
 <div class="varasa-pages">
     <!-- ******** side-navbar start ******** -->
     <nav class="side-navbar">
         <div>
             <img src="{{ asset('assets/images/varasa logo.png') }}" alt="varasa logo">
         </div>
-
         <ul class="navbar-ul">
             <li>
                 <a class="nav-link" href="{{ url('/dashboard') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/Dashboard.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Dashboard">
+                    <img class="nav-img" src="{{ asset('assets/images/Dashboard.png') }}"
+                        data-image-url="{{ asset('assets/images/') }}" alt="Dashboard">
                     <p>Dashboard</p>
                 </a>
             </li>
+            @if (Auth::user()->permissions->isEmpty())
+                <li>
+                    <a class="nav-link" href="{{ route('our-services.index') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/Our Service.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="Our Service">
+                        <p>Our Service</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('order.index') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/Orders.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="Orders">
+                        <p>Orders</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('my-profile') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/My Profile.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="My Profile">
+                        <p>My Profile</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('users.index') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/Users.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="Users">
+                        <p>Users</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('professional.index') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/Professionals.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="Professionals">
+                        <p>Professionals</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('sub-admin.index') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/Sub Admins.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="Sub Admins">
+                        <p>Sub Admins</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('notify') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/Notifications.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="Notifications">
+                        <p>Notifications</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('campaign.index') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/Campaign.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="Campaign">
+                        <p>Campaign</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ route('settings.index') }}">
+                        <img class="nav-img" src="{{ asset('assets/images/Setting.png') }}"
+                            data-image-url="{{ asset('assets/images/') }}" alt="Setting">
+                        <p>Setting</p>
+                    </a>
+                </li>
+            @else
+                @php
+                    $has_permission = Auth::user()->permissions->first();
+                @endphp
+                @if ($has_permission->our_service == 1)
+                    <li>
+                        <a class="nav-link" href="{{ route('our-services.index') }}">
+                            <img class="nav-img" src="{{ asset('assets/images/Our Service.png') }}"
+                                data-image-url="{{ asset('assets/images/') }}" alt="Our Service">
+                            <p>Our Service</p>
+                        </a>
+                    </li>
+                @endif
+                @if ($has_permission->orders == 1)
+                    <li>
+                        <a class="nav-link" href="{{ route('order.index') }}">
+                            <img class="nav-img" src="{{ asset('assets/images/Orders.png') }}"
+                                data-image-url="{{ asset('assets/images/') }}" alt="Orders">
+                            <p>Orders</p>
+                        </a>
+                    </li>
+                @endif
+                @if ($has_permission->my_profile == 1)
+                    <li>
+                        <a class="nav-link" href="{{ route('my-profile') }}">
+                            <img class="nav-img" src="{{ asset('assets/images/My Profile.png') }}"
+                                data-image-url="{{ asset('assets/images/') }}" alt="My Profile">
+                            <p>My Profile</p>
+                        </a>
+                    </li>
+                @endif
+                @if ($has_permission->users == 1)
+                    <li>
+                        <a class="nav-link" href="{{ route('users.index') }}">
+                            <img class="nav-img" src="{{ asset('assets/images/Users.png') }}"
+                                data-image-url="{{ asset('assets/images/') }}" alt="Users">
+                            <p>Users</p>
+                        </a>
+                    </li>
+                @endif
+                @if ($has_permission->professionals == 1)
+                    <li>
+                        <a class="nav-link" href="{{ route('professional.index') }}">
+                            <img class="nav-img" src="{{ asset('assets/images/Professionals.png') }}"
+                                data-image-url="{{ asset('assets/images/') }}" alt="Professionals">
+                            <p>Professionals</p>
+                        </a>
+                    </li>
+                @endif
+                @if ($has_permission->notifications == 1)
+                    <li>
+                        <a class="nav-link" href="{{ route('notify') }}">
+                            <img class="nav-img" src="{{ asset('assets/images/Notifications.png') }}"
+                                data-image-url="{{ asset('assets/images/') }}" alt="Notifications">
+                            <p>Notifications</p>
+                        </a>
+                    </li>
+                @endif
+                @if ($has_permission->settings == 1)
+                    <li>
+                        <a class="nav-link" href="{{ route('settings.index') }}">
+                            <img class="nav-img" src="{{ asset('assets/images/Setting.png') }}"
+                                data-image-url="{{ asset('assets/images/') }}" alt="Setting">
+                            <p>Setting</p>
+                        </a>
+                    </li>
+                @endif
+
+            @endif
             <li>
-                <a class="nav-link" href="{{ route('our-services.index') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/Our Service.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Our Service">
-                    <p>Our Service</p>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="{{ route('orders') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/Orders.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Orders">
-                    <p>Orders</p>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="{{ route('my-profile') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/My Profile.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="My Profile">
-                    <p>My Profile</p>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="{{ route('users.index') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/Users.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Users">
-                    <p>Users</p>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="{{ route('professional.index') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/Professionals.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Professionals">
-                    <p>Professionals</p>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="{{ route('sub-admin.index') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/Sub Admins.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Sub Admins">
-                    <p>Sub Admins</p>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="Notification.html">
-                    <img class="nav-img" src="{{ asset('assets/images/Notifications.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Notifications">
-                    <p>Notifications</p>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="{{ route('campaign.index') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/Campaign.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Campaign">
-                    <p>Campaign</p>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="{{ route('settings') }}">
-                    <img class="nav-img" src="{{ asset('assets/images/Setting.png') }}" data-image-url="{{ asset('assets/images/') }}" alt="Setting">
-                    <p>Setting</p>
-                </a>
-            </li>
-            <li>
-                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <button class="logout sub_nurse_submit" href="LogOut.html">
                     <img class="nav-img" src="{{ asset('assets/images/Log Out.png') }}" alt="Log Out">
                     <p>Log Out</p>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+                </button>
             </li>
         </ul>
-        
+
+
     </nav>
     <!-- ******** side-navbar end ******** -->
 
@@ -124,7 +226,9 @@
                     <p>{{ Auth::user()->email }}</p>
                 </div>
                 <a href="#">
-                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('assets/images/profile icon.png') }}" width="50" height="50" style="border-radius: 50%; object-fit:contain" alt="varasa profile icon">
+                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('assets/images/profile icon.png') }}"
+                        width="50" height="50" style="border-radius: 50%; object-fit:contain"
+                        alt="varasa profile icon">
                 </a>
                 <div class="bar-icon">
                     <img class="bar_btn" src="{{ asset('assets/images/bar.png') }}" alt="varasa bar icon">
@@ -141,76 +245,152 @@
             <div class="navbar-ul-section">
                 <ul class="navbar-ul">
                     <li>
-                        <a class="nav-link" href="Dashboard.html">
-                            <img class="nav-img" src="assets/images/Dashboard.png" alt="Dashboard">
+                        <a class="nav-link" href="{{ url('/dashboard') }}">
+                            <img class="nav-img" src="{{ asset('assets/images/Dashboard.png') }}"
+                                data-image-url="{{ asset('assets/images/') }}" alt="Dashboard">
                             <p>Dashboard</p>
                         </a>
                     </li>
+                    @if (Auth::user()->permissions->isEmpty())
+                        <li>
+                            <a class="nav-link" href="{{ route('our-services.index') }}">
+                                <img class="nav-img" src="{{ asset('assets/images/Our Service.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="Our Service">
+                                <p>Our Service</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('order.index') }}">
+                                <img class="nav-img" src="{{ asset('assets/images/Orders.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="Orders">
+                                <p>Orders</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('my-profile') }}">
+                                <img class="nav-img" src="{{ asset('assets/images/My Profile.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="My Profile">
+                                <p>My Profile</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('users.index') }}">
+                                <img class="nav-img" src="{{ asset('assets/images/Users.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="Users">
+                                <p>Users</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('professional.index') }}">
+                                <img class="nav-img" src="{{ asset('assets/images/Professionals.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="Professionals">
+                                <p>Professionals</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('sub-admin.index') }}">
+                                <img class="nav-img" src="{{ asset('assets/images/Sub Admins.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="Sub Admins">
+                                <p>Sub Admins</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="Notification.html">
+                                <img class="nav-img" src="{{ asset('assets/images/Notifications.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="Notifications">
+                                <p>Notifications</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('campaign.index') }}">
+                                <img class="nav-img" src="{{ asset('assets/images/Campaign.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="Campaign">
+                                <p>Campaign</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('settings.index') }}">
+                                <img class="nav-img" src="{{ asset('assets/images/Setting.png') }}"
+                                    data-image-url="{{ asset('assets/images/') }}" alt="Setting">
+                                <p>Setting</p>
+                            </a>
+                        </li>
+                    @else
+                        @php
+                            $has_permission = Auth::user()->permissions->first();
+                        @endphp
+                        @if ($has_permission->our_service == 1)
+                            <li>
+                                <a class="nav-link" href="{{ route('our-services.index') }}">
+                                    <img class="nav-img" src="{{ asset('assets/images/Our Service.png') }}"
+                                        data-image-url="{{ asset('assets/images/') }}" alt="Our Service">
+                                    <p>Our Service</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($has_permission->orders == 1)
+                            <li>
+                                <a class="nav-link" href="{{ route('order.index') }}">
+                                    <img class="nav-img" src="{{ asset('assets/images/Orders.png') }}"
+                                        data-image-url="{{ asset('assets/images/') }}" alt="Orders">
+                                    <p>Orders</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($has_permission->my_profile == 1)
+                            <li>
+                                <a class="nav-link" href="{{ route('my-profile') }}">
+                                    <img class="nav-img" src="{{ asset('assets/images/My Profile.png') }}"
+                                        data-image-url="{{ asset('assets/images/') }}" alt="My Profile">
+                                    <p>My Profile</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($has_permission->users == 1)
+                            <li>
+                                <a class="nav-link" href="{{ route('users.index') }}">
+                                    <img class="nav-img" src="{{ asset('assets/images/Users.png') }}"
+                                        data-image-url="{{ asset('assets/images/') }}" alt="Users">
+                                    <p>Users</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($has_permission->professionals == 1)
+                            <li>
+                                <a class="nav-link" href="{{ route('professional.index') }}">
+                                    <img class="nav-img" src="{{ asset('assets/images/Professionals.png') }}"
+                                        data-image-url="{{ asset('assets/images/') }}" alt="Professionals">
+                                    <p>Professionals</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($has_permission->notifications == 1)
+                            <li>
+                                <a class="nav-link" href="Notification.html">
+                                    <img class="nav-img" src="{{ asset('assets/images/Notifications.png') }}"
+                                        data-image-url="{{ asset('assets/images/') }}" alt="Notifications">
+                                    <p>Notifications</p>
+                                </a>
+                            </li>
+                        @endif
+                        @if ($has_permission->settings == 1)
+                            <li>
+                                <a class="nav-link" href="{{ route('settings.index') }}">
+                                    <img class="nav-img" src="{{ asset('assets/images/Setting.png') }}"
+                                        data-image-url="{{ asset('assets/images/') }}" alt="Setting">
+                                    <p>Setting</p>
+                                </a>
+                            </li>
+                        @endif
+
+                    @endif
                     <li>
-                        <a class="nav-link" href="OurService.html">
-                            <img class="nav-img" src="assets/images/Our Service.png" alt="Our Service">
-                            <p>Our Service</p>
-                        </a>
+                        <button class="logout sub_nurse_submit" href="LogOut.html">
+                            <img class="nav-img" src="{{ asset('assets/images/Log Out.png') }}" alt="Log Out">
+                            <p>Log Out</p>
+                        </button>
                     </li>
-                    <li>
-                        <a class="nav-link" href="Order.html">
-                            <img class="nav-img" src="assets/images/Orders.png" alt="Orders">
-                            <p>Orders</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="MyProfile.html">
-                            <img class="nav-img" src="assets/images/My Profile.png" alt="My Profile">
-                            <p>My Profile</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="users">
-                            <img class="nav-img" src="assets/images/Users.png" alt="Users">
-                            <p>Users</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="Professional.html">
-                            <img class="nav-img" src="assets/images/Professionals.png" alt="Professionals">
-                            <p>Professionals</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-ul">
-                    <li>
-                        <a class="nav-link" href="SubAdmin.html">
-                            <img class="nav-img" src="assets/images/Sub Admins.png" alt="Sub Admins">
-                            <p>Sub Admins</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="Notification.html">
-                            <img class="nav-img" src="assets/images/Notifications.png" alt="Notifications">
-                            <p>Notifications</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="Campaign.html">
-                            <img class="nav-img" src="assets/images/Campaign.png" alt="Campaign">
-                            <p>Campaign</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="Setting.html">
-                            <img class="nav-img" src="assets/images/Setting.png" alt="Setting">
-                            <p>Setting</p>
-                        </a>
-                    </li>
-                    <li>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf <!-- CSRF token for security -->
-                            <button class="nav-link" href="LogOut.html">
-                                <img class="nav-img" src="assets/images/Log Out.png" alt="Log Out">
-                                <p>Log Out</p>
-                            </button>
-                        </form>
-                    </li>
+
                 </ul>
             </div>
         </nav>

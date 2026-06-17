@@ -10,7 +10,7 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
-        'proffesional_id',
+        'professional_id',
         'time_slots_id',
         'status'
     ];
@@ -19,5 +19,10 @@ class Booking extends Model
     public function timeSlot()
     {
         return $this->belongsTo(TimeSlot::class, 'time_slots_id');
+    }
+
+    public function professional()
+    {
+        return $this->belongsTo(Professional::class, 'professional_id');
     }
 }

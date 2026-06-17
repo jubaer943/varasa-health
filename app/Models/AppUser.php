@@ -13,6 +13,7 @@ class AppUser extends Model implements JWTSubject
     protected $table = 'apps_users';
 
     protected $fillable = [
+        'userId',
         'fullname',
         'email',
         'password',
@@ -25,10 +26,40 @@ class AppUser extends Model implements JWTSubject
         'otp_expires_at',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $lastUser = self::where('userId', 'like', 'D%')
+                ->orderBy('userId', 'desc')
+                ->first();
+
+            $nextNumber = $lastUser ? (intval(substr($lastUser->userId, 1)) + 1) : 1;
+
+            $formattedNumber = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+            $user->userId = "D{$formattedNumber}";
+        });
+    }
+
+
+
+
 
     public function UserLocation()
     {
         return $this->hasMany(UserLocation::class, 'user_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    public function deviceTokens()
+    {
+        return $this->morphMany(DeviceToken::class, 'tokenable');
     }
 
     /**

@@ -14,12 +14,12 @@ return new class extends Migration
         //
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('proffesional_id')->nullable();
+            $table->unsignedBigInteger('professional_id')->nullable();
             $table->unsignedBigInteger('time_slots_id')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
 
-            $table->foreign('proffesional_id')->references('id')->on('professionals')->onDelete('cascade');
+            $table->foreign('professional_id')->references('id')->on('professionals')->onDelete('cascade');
             $table->foreign('time_slots_id')->references('id')->on('time_slots')->onDelete('cascade');
         });
     }

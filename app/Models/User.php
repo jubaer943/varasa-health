@@ -50,4 +50,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function permissions()
+    {
+        return $this->hasMany(HasPermission::class, 'admin_id');
+    }
 }

@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('flat_no')->nullable();
             $table->string('house_no')->nullable();
             $table->string('road')->nullable();
-            $table->string('aria')->nullable();
+            $table->string('area')->nullable();
+            $table->string('postcode')->nullable();
+            $table->string('country')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

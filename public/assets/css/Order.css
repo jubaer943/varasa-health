@@ -1,22 +1,26 @@
-.order{
-    > h1{
+.order {
+    >h1 {
         font-size: 30px;
         font-weight: 600;
     }
-    .search_refresh{
+
+    .search_refresh {
         display: flex;
         margin-top: 20px;
         align-items: center;
         justify-content: space-between;
-        > div{
+
+        >div {
             position: relative;
-            > img{
+
+            >img {
                 z-index: 9;
                 margin-top: 8px;
                 margin-left: 10px;
                 position: absolute;
             }
-            > input{
+
+            >input {
                 border: none;
                 outline: none;
                 padding: 12px 40px;
@@ -28,7 +32,8 @@
                 -o-border-radius: 8px;
             }
         }
-        > button{
+
+        >button {
             gap: 10px;
             padding: 10px 20px;
             display: flex;
@@ -43,15 +48,18 @@
             -o-border-radius: 8px;
         }
     }
-    .order-type-btn{
+
+    .order-type-btn {
         display: flex;
         margin-top: 50px;
         align-items: center;
         justify-content: space-between;
-        > .lefts-btn{
+
+        >.lefts-btn {
             display: flex;
-            > a,
-            > button{
+
+            >a,
+            >button {
                 padding: 15px;
                 width: 135px;
                 font-weight: 500;
@@ -65,32 +73,40 @@
                 border: 1.8px solid #029687;
                 background-color: #fff;
             }
-            > button:first-child{
+
+            >.active {
                 color: #FFFFFF;
                 font-weight: 600;
                 background: #029687;
-                border-top-left-radius: 8px;
-                border-bottom-left-radius: 8px;
             }
-            > button:last-child{
+
+            >button:last-child {
                 border-top-right-radius: 8px;
                 border-bottom-right-radius: 8px;
             }
+
+            >button:first-child {
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
+            }
         }
-        > .right-btns{
+
+        >.right-btns {
             gap: 10px;
             display: flex;
             margin-top: -27px;
             align-items: center;
-            > div{
-                > p{
+
+            >div {
+                >p {
                     color: #5C5C5C;
                     font-weight: 400;
                     font-size: 14px;
                     margin-bottom: 10px;
                 }
-                > input,
-                > select{
+
+                >input,
+                >select {
                     width: 135px;
                     display: flex;
                     padding: 5px;
@@ -108,19 +124,21 @@
                     -moz-border-radius: 8px;
                     -ms-border-radius: 8px;
                     -o-border-radius: 8px;
-}
+                }
             }
         }
     }
 }
+
 /* Order-box-section start */
-.Order-box-section{
+.Order-box-section {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    > .Order-box{
+
+    >.Order-box {
         width: 49%;
         min-width: 380px;
         padding: 20px 30px;
@@ -132,58 +150,71 @@
         -moz-border-radius: 8px;
         -ms-border-radius: 8px;
         -o-border-radius: 8px;
-        > .order-time{
+
+        >.order-time {
             display: flex;
             align-items: start;
             justify-content: space-between;
-            > p,
-            > div > p{
+
+            >p,
+            >div>p {
                 font-size: 14px;
                 color: #41484D;
                 font-weight: 400;
-                > b{
+
+                >b {
                     font-weight: 500;
                     color: #363b3e;
                 }
             }
-            > div{
+
+            >div {
                 text-align: end;
-                > p:last-child{
+
+                >p:last-child {
                     margin-top: 8px;
                 }
             }
         }
-        > .order-img{
+
+        >.order-img {
             gap: 20px;
             display: flex;
             margin-top: 15px;
             align-items: center;
-            >p{
+
+            >p {
                 color: #029687;
                 font-weight: 600;
             }
         }
-        .order-hr{
+
+        .order-hr {
             margin: 20px 0;
             border: 1px solid #029687;
         }
-        > .order-amount{
+
+        >.order-amount {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            > div > p{
+
+            >div>p {
                 font-size: 14px;
                 color: #41484D;
                 font-weight: 400;
-                > b{
+
+                >b {
                     font-weight: 500;
                     color: #363b3e;
                 }
             }
-            > div > p:last-child{
+
+            >div>p:last-child {
                 margin-top: 8px;
             }
-            > a{
+
+            >a {
                 min-width: 100px;
                 padding: 10px;
                 cursor: pointer;
@@ -205,62 +236,75 @@
         }
     }
 }
+
 /* Order-box-section end */
 
 
 
 /* order-details page start */
-.order-details{
+.order-details {
     margin-top: 30px;
+
     .order-details-title {
         gap: 10px;
         display: flex;
         align-items: center;
-        > h1{
+
+        >h1 {
             font-size: 25px;
             font-weight: 500;
             color: #293034;
         }
-        > p{
+
+        >p {
             color: #3C474D;
         }
     }
+
     .order-summary {
         width: 90%;
         margin-top: 20px;
         border: 1px solid #2bafaf;
         background-color: #fff;
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
+
         td {
             padding: 15px;
             border: 2px solid #2bafaf;
             font-size: 16px;
             color: #333;
         }
-    
+
         td strong {
             font-weight: bold;
         }
+
         tr:first-child td {
             border-top: none;
         }
+
         tr td:first-child {
             border-left: none;
         }
+
         tr td:last-child {
             border-right: none;
         }
+
         tr:last-child td {
             border-bottom: none;
         }
     }
-    .user_Professional_info{
+
+    .user_Professional_info {
         display: flex;
         margin-top: 50px;
-        > button{
+
+        >button {
             min-width: 150px;
             font-size: 14px;
             font-weight: 550;
@@ -271,15 +315,18 @@
             background: #ffffff;
             border: 1.8px solid #029687;
         }
-        > .active-user-btn{
+
+        >.active-user-btn {
             color: #FFFFFF;
             background: #029687;
         }
-        > button:first-child{
+
+        >button:first-child {
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
         }
-        > button:last-child{
+
+        >button:last-child {
             border-top-right-radius: 8px;
             border-bottom-right-radius: 8px;
         }
@@ -288,19 +335,22 @@
 
 /* user-info start */
 .Professional-info,
-.user-info{
+.user-info {
     margin-top: 10px;
-    .user-name{
+
+    .user-name {
         width: 90%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        > h2{
+
+        >h2 {
             font-size: 30px;
             color: #293034;
             font-weight: 600;
         }
-        > a{
+
+        >a {
             font-size: 13px;
             display: flex;
             letter-spacing: 1px;
@@ -318,35 +368,42 @@
             -o-border-radius: 8px;
         }
     }
-    .profile-photo{
+
+    .profile-photo {
         margin-top: 40px;
-        > p{
+
+        >p {
             color: #41484D;
             font-size: 16px;
             font-weight: 600;
         }
-        > img{
+
+        >img {
             height: 100px;
             width: 100px;
             cursor: pointer;
             margin-top: 20px;
         }
     }
-    .user-details{
+
+    .user-details {
         width: 90%;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        > div{
+
+        >div {
             width: 49%;
             margin-top: 30px;
-            > p{
+
+            >p {
                 font-size: 16px;
                 font-weight: 600;
                 color: #41484D;
             }
-            > div{
+
+            >div {
                 margin-top: 10px;
                 width: 100%;
                 font-size: 15px;
@@ -364,9 +421,11 @@
         }
     }
 }
-.user-hide{
+
+.user-hide {
     display: none;
 }
+
 /* user-info end */
 
 /* order-details page end */

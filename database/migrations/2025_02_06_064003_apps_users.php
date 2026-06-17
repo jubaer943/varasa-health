@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('Apps_users', function (Blueprint $table) {
             $table->id();
+            $table->string('userId')->nullable();
             $table->string('fullname')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->unique();
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->tinyInteger('gender')->nullable();
             $table->string('primary_location')->nullable();
             $table->string('profile_picture')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->integer('otp')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
             $table->timestamps();

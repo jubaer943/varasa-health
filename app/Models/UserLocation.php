@@ -16,6 +16,8 @@ class UserLocation extends Model
         'house_no',
         'road',
         'aria',
+        'postcode',
+        'country',
         'user_id',
     ];
 

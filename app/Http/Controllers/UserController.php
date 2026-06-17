@@ -6,27 +6,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-        public function login(Request $req)
-        {
-            // Validate the login credentials
-            $validated = $req->validate([
+    public function login(Request $req)
+    {
+
+        $validated = $req->validate(
+            [
                 'email' => 'required|email',
                 'password' => 'required',
-            ]);
-
-            // Attempt to authenticate the user
-            if (Auth::attempt(['email' => $req->email, 'password' => $req->password])) {
-                // Authentication passed, redirect to the dashboard
-                return redirect()->route('dashboard');
-            }
+            ]
+        );
 
 
-            return back()->with('error', 'Wrong credentials');
+        if (Auth::attempt(['email' => $req->email, 'password' => $req->password, 'status' => 1])) {
 
+            return redirect()->route('dashboard');
         }
+
+        return back()->withErrors(['error' => 'Wrong credentials']);
+    }
+
 
     public function logout(Request $request)
     {
