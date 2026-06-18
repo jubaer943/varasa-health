@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')
                 ->nullable()
-                ->constrained('Apps_users')
+                ->constrained('apps_users')
                 ->onDelete('cascade');
 
             $table->foreignId('professional_id')

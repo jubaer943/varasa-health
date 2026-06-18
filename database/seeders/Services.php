@@ -14,7 +14,7 @@ class Services extends Seeder
     public function run(): void
     {
         //
-        DB::table('Services')->insert([
+        DB::table('services')->insert([
             [
                 'rate' => 0,
                 'name' => 'Nurse Home Service',
@@ -36,6 +36,5 @@ class Services extends Seeder
                 'banner' => 'service-4.png',
             ],
         ]);
-        
     }
 }

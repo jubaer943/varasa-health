@@ -15,7 +15,7 @@ class Apps_User extends Seeder
     public function run(): void
     {
         //
-        DB::table('Apps_users')->insert([
+        DB::table('apps_users')->insert([
             'fullname' => 'Hridoy Khan',
             'email' => 'admin@gmail.com',
             'phone' => '01703326358',
