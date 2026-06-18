@@ -12,26 +12,44 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->id();
             $table->string('order_number')->unique()->nullable();
-            $table->foreignId('schedule_id')->references('id')->on('time_slots')->onDelete('cascade');
             $table->string('orderDate', 50)->nullable();
-            $table->foreignId('user_id')->nullable()->constrained('apps_users')->onDelete('set null');
+
+            $table->unsignedBigInteger('schedule_id');
+            $table->foreign('schedule_id')->references('id')->on('time_slots')->onDelete('cascade');
+
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('apps_users')->onDelete('set null');
+
             $table->string('customer_name', 255);
             $table->string('phone', 20);
             $table->string('email', 255)->nullable();
             $table->text('address');
-            $table->tinyInteger('gender')->comment('1 = Male, 2 = Female')->nullable();
-            $table->foreignId('service_id')->references('id')->on('services')->onDelete('cascade'); // Selected Service ID
-            $table->foreignId('product_id')->references('id')->on('sub_services')->onDelete('cascade');
+            $table->tinyInteger('gender')->nullable();
+
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('sub_services')->onDelete('cascade');
+
             $table->integer('quantity')->nullable();
             $table->decimal('price', 8, 2)->nullable();
-            $table->foreignId('advance_price_id')->nullable()->constrained('advance_price')->onDelete('set null');
+
+            $table->unsignedBigInteger('advance_price_id')->nullable();
+            $table->foreign('advance_price_id')->references('id')->on('advance_price')->onDelete('set null');
+
             $table->string('payment_method', 50)->nullable();
             $table->decimal('total_price', 10, 2);
             $table->decimal('discount', 10, 2)->default(0);
             $table->decimal('subtotal', 10, 2);
-            $table->foreignId('service_provider')->nullable()->constrained('professionals')->onDelete('set null');
+
+            $table->unsignedBigInteger('service_provider')->nullable();
+            $table->foreign('service_provider')->references('id')->on('professionals')->onDelete('set null');
+
             $table->integer('otp')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
