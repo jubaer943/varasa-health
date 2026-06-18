@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email', 255)->nullable();
             $table->text('address');
             $table->tinyInteger('gender')->comment('1 = Male, 2 = Female')->nullable();
-            $table->foreignId('service_id')->references('id')->on('Services')->onDelete('cascade'); // Selected Service ID
+            $table->foreignId('service_id')->references('id')->on('services')->onDelete('cascade'); // Selected Service ID
             $table->foreignId('product_id')->references('id')->on('sub_services')->onDelete('cascade');
             $table->integer('quantity')->nullable();
             $table->decimal('price', 8, 2)->nullable();
