@@ -35,7 +35,7 @@ class DashboardController extends Controller
             $data['services'][] = [
                 'id' => $service->id,
                 'name' => $service->name,
-                'banner' => url('assets/images/' . $service->banner),
+                'banner' => url('storage/' . $service->banner),
             ];
         }
 
