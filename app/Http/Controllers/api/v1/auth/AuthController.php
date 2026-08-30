@@ -59,7 +59,7 @@ class AuthController extends Controller
             'status' => true,
             'message' => 'User registered successfully! Please verify your Number.',
             'code' => 200,
-            'otp' => $otp,
+            'otp' => null,
             'description' => null,
         ]);
     }
@@ -94,7 +94,7 @@ class AuthController extends Controller
             'status' => true,
             'message' => 'Otp sent successfully !',
             'code' => 200,
-            'otp' => $otp,
+            'otp' => null,
             'description' => null,
         ]);
     }

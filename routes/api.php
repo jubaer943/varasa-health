@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Home\EarningController;
 use App\Http\Controllers\api\v1\home\ServiceController;
 use App\Http\Controllers\api\v1\home\OrderController;
 use App\Http\Controllers\api\v1\NotificationController;
+use App\Http\Controllers\api\v1\SettingsController;
 use App\Http\Controllers\api\v1\TimeSlotController;
 use App\Http\Controllers\Servicecontroller as ControllersServicecontroller;
 use App\Models\Notification;
@@ -76,6 +77,10 @@ Route::prefix('v1')->group(function () {
         Route::post('save/token', [NotificationController::class, 'saveFCMToken']);
         Route::get('notify', [NotificationController::class, 'sendNotification']);
     });
+
+    Route::get('support/{user_type}', [SettingsController::class, 'support']);
+    Route::get('policy/{user_type}', [SettingsController::class, 'policy']);
+    Route::get('trams/{user_type}', [SettingsController::class, 'trams']);
     Route::post('sms', [NotificationController::class, 'testSms']);
     Route::get('check-fcm-token', [NotificationController::class, 'checkFCMToken']);
 });
