@@ -283,7 +283,7 @@ class OrderController extends Controller
         $user = $order->appsUsers;
         if ($request->action === 1) {
             $order->update(['service_provider' => $professional->id, 'status' => 1]);
-            $this->sendPushNotification($user->id, $user->userId, 'Order', $professional->full_name . ' accept your order ' . $order->order_number);
+            // $this->sendPushNotification($user->id, $user->userId, 'Order', $professional->full_name . ' accept your order ' . $order->order_number);
 
             return response()->json([
                 'status' => true,
@@ -329,7 +329,7 @@ class OrderController extends Controller
                 ->get();
         } else {
             // Fetch orders with status 2 (Completed) or 3 (Canceled)
-            $orders = Order::where('user_id', $user->userId)
+            $orders = Order::where('user_id', $user->id)
                 ->where('status', $status)
                 ->get();
         }
@@ -430,10 +430,10 @@ class OrderController extends Controller
 
         $user = $order->appsUsers;
 
-        return response()->json($user);
+        // return response()->json($user);
 
         $professional = $order->professional;
-        $this->sendPushNotification($user->id, $user->userId, 'Order', ' You received an OTP-' . $otp . ' from ' . $professional->full_name);
+        $this->sendPushNotification($user->id, $user->userId, 'Order', ' You received an OTP-' . $otp . ' from ' . $professional->fullname);
         return response()->json([
             'status' => true,
             'code' => 200,

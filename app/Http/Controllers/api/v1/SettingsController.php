@@ -33,8 +33,8 @@ class SettingsController extends Controller
         return response()->json(
             [
                 'status' => false,
-                'code' => 400,
-                'message' => 'Invalid user type',
+                'code' => 200,
+                'message' => 'Data retrive successfully !',
                 'data' => $data,
                 'decscription' => null,
             ]
@@ -99,5 +99,43 @@ class SettingsController extends Controller
             ],
             'decscription' => null,
         ]);
+    }
+
+    public function socialLinks()
+    {
+        $socialLinks = [
+            [
+                'id' => 1,
+                'platform' => 'Facebook',
+                'url' => 'https://facebook.com/yourpage',
+                'icon' => 'https://varasahealth.com/icons/facebook.png',
+            ],
+            [
+                'id' => 2,
+                'platform' => 'Instagram',
+                'url' => 'https://instagram.com/yourprofile',
+                'icon' => 'https://varasahealth.com/icons/instagram.png',
+            ],
+            [
+                'id' => 3,
+                'platform' => 'YouTube',
+                'url' => 'https://youtube.com/@yourchannel',
+                'icon' => 'https://varasahealth.com/icons/youtube.png',
+            ],
+            [
+                'id' => 4,
+                'platform' => 'WhatsApp',
+                'url' => 'https://wa.me/8801700000000',
+                'icon' => 'https://varasahealth.com/icons/whatsapp.png',
+            ],
+        ];
+
+        return response()->json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'Social links fetched successfully',
+            'data' => $socialLinks,
+            'decscription' => null,
+        ], 200);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Booking;
+use App\Models\OrderCancel;
 
 
 class Professional extends Authenticatable implements JWTSubject

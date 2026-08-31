@@ -79,6 +79,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::get('support/{user_type}', [SettingsController::class, 'support']);
+    Route::get('social-links', [SettingsController::class, 'socialLinks']);
     Route::get('policy/{user_type}', [SettingsController::class, 'policy']);
     Route::get('trams/{user_type}', [SettingsController::class, 'trams']);
     Route::post('sms', [NotificationController::class, 'testSms']);
