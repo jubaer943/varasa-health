@@ -423,6 +423,12 @@ AddClassFunction(
     "active-user-pro-btn",
     "active-user-pro-contents"
 );
+AddClassFunction(
+    ".user-pro-btn3",
+    ".user-pro-contents3",
+    "active-user-pro-btn",
+    "active-user-pro-contents"
+);
 
 // setting page contact section
 const contact_edit = document.querySelectorAll(".contact-edit");

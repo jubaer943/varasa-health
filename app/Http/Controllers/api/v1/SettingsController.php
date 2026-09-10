@@ -71,7 +71,7 @@ class SettingsController extends Controller
         ]);
     }
 
-    public function trams(int $user_type)
+    public function terms(int $user_type)
     {
         $policy = PrivacyPolicy::where('policy_type', $user_type)
             ->latest()

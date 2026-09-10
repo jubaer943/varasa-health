@@ -60,6 +60,7 @@ Route::prefix('v1')->group(function () {
         Route::get('myorders', [OrderController::class, 'myOrders']);
         Route::get('order/details/{order_id}', [OrderController::class, 'userOrderDetails']);
     });
+
     Route::prefix('professional')->group(function () {
         Route::get('orders', [OrderController::class, 'getOrder']);
         Route::get('order/details/{order_id}', [OrderController::class, 'orderDetails']);
@@ -81,7 +82,7 @@ Route::prefix('v1')->group(function () {
     Route::get('support/{user_type}', [SettingsController::class, 'support']);
     Route::get('social-links', [SettingsController::class, 'socialLinks']);
     Route::get('policy/{user_type}', [SettingsController::class, 'policy']);
-    Route::get('trams/{user_type}', [SettingsController::class, 'trams']);
+    Route::get('terms/{user_type}', [SettingsController::class, 'terms']);
     Route::post('sms', [NotificationController::class, 'testSms']);
     Route::get('check-fcm-token', [NotificationController::class, 'checkFCMToken']);
 });

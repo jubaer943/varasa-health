@@ -115,14 +115,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('details/{order_id}', [OrderAdminController::class, 'orderDetails'])->name('order.details');
     });
 
-    Route::get('settings', function () {
-        return view('settings');
-    })->name('settings');
+    // Route::get('settings', function () {
+    //     return view('settings');
+    // })->name('settings');
 
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
-        Route::post('/save-privacy-policies', [SettingsController::class, 'savePrivacyPolicies']);
-        Route::post('/save-about-us', [SettingsController::class, 'saveAboutUs']);
+        Route::post('/save-privacy-policies', [SettingsController::class, 'savePrivacyPolicies'])->name('save.privacy.policies');
+        Route::post('/save-terms-condition', [SettingsController::class, 'saveTermsCondition'])->name('save.privacy.policies');
+        Route::post('/save-about-us', [SettingsController::class, 'saveAboutUs'])->name('save.about.us');
+        Route::post('/save-contact-us', [SettingsController::class, 'contactUs'])->name('save.contact.us');
     });
 
     Route::view('notification', 'notification')->name('notify');
