@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\CmsContent;
 use App\Models\HelpFaq;
 use App\Models\PrivacyPolicy;
 use App\Models\privacyPolicy as ModelsPrivacyPolicy;
@@ -27,8 +28,8 @@ class SettingsController extends Controller
         $faqs = HelpFaq::where('user_type', (int)$user_type)->select('id', 'question', 'answer')->get();
         $data = [
             'faqs' => $faqs,
-            'number' => null,
-            'email' => null,
+            'number' => '01703326358',
+            'email' => 'test@example.com',
         ];
         return response()->json(
             [
@@ -41,9 +42,10 @@ class SettingsController extends Controller
         );
     }
 
-    public function policy(int $user_type)
+    public function policy(string $user_type)
     {
-        $policy = PrivacyPolicy::where('policy_type', $user_type)
+        $policy = CmsContent::where('type', 'privacy-policy')
+            ->where('user_type', $user_type)
             ->latest()
             ->first();
 
@@ -64,16 +66,17 @@ class SettingsController extends Controller
             'data'    => [
                 'id'          => $policy->id,
                 'title'       => 'Privacy Policy',
-                'description' => $policy?->privacy_policy_description,
+                'description' => $policy?->description,
                 'updated_at'  => $policy->updated_at?->format('Y-m-d H:i:s'),
             ],
             'decscription' => null,
         ]);
     }
 
-    public function terms(int $user_type)
+    public function terms(string $user_type)
     {
-        $policy = PrivacyPolicy::where('policy_type', $user_type)
+        $policy = CmsContent::where('type', 'terms-condition')
+            ->where('user_type', $user_type)
             ->latest()
             ->first();
 
@@ -93,8 +96,8 @@ class SettingsController extends Controller
             'message' => 'Terms and Conditions fetched successfully',
             'data'    => [
                 'id'          => $policy->id,
-                'title'       => 'Terms and Conditions',
-                'description' => $policy?->privacy_policy_description,
+                'title'       => $policy->title,
+                'description' => $policy?->description,
                 'updated_at'  => $policy->updated_at?->format('Y-m-d H:i:s'),
             ],
             'decscription' => null,

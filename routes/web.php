@@ -122,7 +122,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
         Route::post('/save-privacy-policies', [SettingsController::class, 'savePrivacyPolicies'])->name('save.privacy.policies');
-        Route::post('/save-terms-condition', [SettingsController::class, 'saveTermsCondition'])->name('save.privacy.policies');
+        Route::post('/save-terms-condition', [SettingsController::class, 'saveTermsCondition'])->name('save.terms.condition');
         Route::post('/save-about-us', [SettingsController::class, 'saveAboutUs'])->name('save.about.us');
         Route::post('/save-contact-us', [SettingsController::class, 'contactUs'])->name('save.contact.us');
     });
