@@ -13,8 +13,10 @@ class SettingsController extends Controller
 {
     public function index()
     {
-        $userPrivacyPolicy = PrivacyPolicy::where('policy_type', 1)->first();
-        $professionalPrivacyPolicy = PrivacyPolicy::where('policy_type', 2)->first();
+        $userPrivacyPolicy = CmsContent::where('user_type', 'user')
+            ->where('type', 'privacy-policy')->first();
+        $professionalPrivacyPolicy = CmsContent::where('user_type', 'professional')
+            ->where('type', 'privacy-policy')->first();
         $userAbout = About::where('about_type', 1)->first();
         $professionalAbout = About::where('about_type', 2)->first();
         return view('settings', compact('userPrivacyPolicy', 'professionalPrivacyPolicy', 'userAbout', 'professionalAbout'));
