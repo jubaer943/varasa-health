@@ -435,7 +435,7 @@ class OrderController extends Controller
 
         // return response()->json($user);
 
-        $professional = $order->professional;
+        $professional = $order->provider;
         $this->sendPushNotification($user->id, $user->userId, 'Order', ' You received an OTP-' . $otp . ' from ' . $professional->fullname);
         return response()->json([
             'status' => true,
