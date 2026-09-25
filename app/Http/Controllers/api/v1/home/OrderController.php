@@ -372,6 +372,7 @@ class OrderController extends Controller
             'otp' => $order->otp,
         ];
         $serviceName = optional($order->service)->name ?? 'No service available';
+        $serviceId = optional($order->service)->id ?? 0;
         $subService = SubService::find($order->product_id);
         $subServiceText = $subService ? $subService->service_name . ' ×' . $order->quantity : '';
 
@@ -381,6 +382,7 @@ class OrderController extends Controller
 
 
         $data['orderDetails'] = [
+            'service_id' => $serviceId,
             'serviceName' => $serviceName . '|' . $subServiceText,
             'requestGender' => $order->gender == 1 ? "Male" : "Female",
             'orderId' => $order->order_number,
@@ -392,6 +394,7 @@ class OrderController extends Controller
 
         if ($professional) {
             $data['providerDetails'] = [
+                'provider_id' => $professional->id,
                 'ServiceProviderName' => $professional->full_name,
                 'professionaId' => $professional->professional_id,
                 'gender' => $professional->gender == 1 ? "Male" : "Female",
@@ -456,7 +459,8 @@ class OrderController extends Controller
             ], 200);
         }
 
-        $order = Order::where('order_number', $request->order_id)->firstOrFail();
+        $order = Order::where('order_number', $request->order_id)->first();
+
         if ($order->otp != $request->otp) {
             return response()->json([
                 'status' => false,
@@ -470,7 +474,7 @@ class OrderController extends Controller
         $user = $order->appsUsers;
         $this->sendPushNotification($user->id, $user->userId, 'Order', 'Thanks for your order . Stay with us.');
 
-        $professional = $order->professional;
+        $professional = $order->provider;
         $this->sendPushNotification($professional->id, $professional->professional_id, 'Order', 'You have completed a service. Thank you for your Support.');
 
         return response()->json([

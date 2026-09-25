@@ -24,4 +24,15 @@ class Service extends Model
     {
         return $this->hasMany(SubService::class, 'service_id');
     }
+
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function averageRating()
+    {
+        return round($this->reviews()->where('is_approved', true)->avg('rating'), 1) ?? 0.0;
+    }
 }

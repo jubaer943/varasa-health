@@ -97,4 +97,14 @@ class Professional extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function providerReviews()
+    {
+        return $this->hasMany(Review::class, 'provider_id');
+    }
+
+    public function providerAverageRating()
+    {
+        return round($this->providerReviews()->where('is_approved', true)->avg('rating'), 1) ?? 0.0;
+    }
 }

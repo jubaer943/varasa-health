@@ -14,7 +14,7 @@ return new class extends Migration
         //
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->integer('rate');
+            $table->decimal('ratting', 2, 1);
             $table->string('name');
             $table->text('banner');
             $table->tinyInteger('has_subservice')->default(1);

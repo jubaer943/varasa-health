@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\auth;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeleteAccountRequest;
 use App\Models\AppUser;
 use App\Models\UserLocation;
 use Illuminate\Http\Request;
@@ -11,11 +12,14 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Carbon\Carbon;
 use Laravel\Ui\Presets\React;
+use App\AuthenticatedProfessional;
 use App\Traits\SendsSms;
 
 class AuthController extends Controller
 {
     use SendsSms;
+    use AuthenticatedProfessional;
+
     public function user_register(Request $request)
     {
         // $request->validate([
@@ -366,5 +370,44 @@ class AuthController extends Controller
             'message' => 'Address data retrived successfully !',
             'data' => $savedLocations,
         ]);
+    }
+
+
+    public function deleteAccount(DeleteAccountRequest $request)
+    {
+        $accountType = (int) $request->account_type;
+        $user = null;
+
+
+        if ($accountType === 1) {
+            $user = $this->getAuthenticatedUser();
+        } elseif ($accountType === 2) {
+            $user = $this->AuthenticatedProfessional();
+        }
+
+        if (!$user) {
+            return response()->json([
+                'status'  => false,
+                'code'    => 401,
+                'message' => 'Unauthenticated or user not found.',
+                'data'    => [],
+            ], 401);
+        }
+
+        $user->update([
+            'phone' => 'DEL_' . time() . '_' . $user->phone,
+        ]);
+
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+        } catch (\Exception $e) {
+        }
+
+        return response()->json([
+            'status'  => true,
+            'code'    => 200,
+            'message' => 'Account deleted successfully!',
+            'data'    => [],
+        ], 200);
     }
 }

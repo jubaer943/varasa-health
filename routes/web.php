@@ -17,6 +17,14 @@ use App\Http\Controllers\SubServicesController;
 use App\Http\Livewire\OrdersList;
 use Illuminate\Support\Facades\Auth;
 
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
 Route::get('/login', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');

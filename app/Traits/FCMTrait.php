@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\DeviceToken;
 use App\Models\Notification as ModelsNotification;
+use Illuminate\Support\Facades\Log;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
@@ -14,14 +15,29 @@ trait FCMTrait
 {
     protected function sendFCM($deviceToken, $title, $body)
     {
-        $factory = (new Factory)->withServiceAccount(storage_path('app/firebase/firebase-credentials.json'));
-        $messaging = $factory->createMessaging();
+        $filePath = storage_path('app/firebase/firebase-credentials.json');
 
-        $message = CloudMessage::new()
-            ->withTarget('token', $deviceToken)
-            ->withNotification(Notification::create($title, $body));
+        if (!file_exists($filePath) || !is_readable($filePath)) {
+            // Log::error("FCM Credentials file is missing or not readable at: {$filePath}");
+            return null;
+        }
 
-        return $messaging->send($message);
+        try {
+            $factory = (new Factory)->withServiceAccount($filePath);
+            $messaging = $factory->createMessaging();
+
+            $message = CloudMessage::new()
+                ->withTarget('token', $deviceToken)
+                ->withNotification(Notification::create($title, $body));
+
+            return $messaging->send($message);
+        } catch (\InvalidArgumentException $e) {
+            Log::error("Invalid FCM Service Account: " . $e->getMessage());
+            return null;
+        } catch (\Throwable $e) {
+            Log::error("FCM Send Error: " . $e->getMessage());
+            return null;
+        }
     }
 
     protected function sendPushNotification($userId, $userType, $title, $body)

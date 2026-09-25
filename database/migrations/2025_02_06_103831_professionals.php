@@ -35,6 +35,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default(2);
             $table->integer('otp')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
+            $table->decimal('ratting', 2, 1)->default(0.00);
             $table->timestamps();
         });
     }

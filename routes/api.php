@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Home\EarningController;
 use App\Http\Controllers\api\v1\home\ServiceController;
 use App\Http\Controllers\api\v1\home\OrderController;
 use App\Http\Controllers\api\v1\NotificationController;
+use App\Http\Controllers\api\v1\ReviewController;
 use App\Http\Controllers\api\v1\SettingsController;
 use App\Http\Controllers\api\v1\TimeSlotController;
 use App\Http\Controllers\Servicecontroller as ControllersServicecontroller;
@@ -61,6 +62,12 @@ Route::prefix('v1')->group(function () {
         Route::get('order/details/{order_id}', [OrderController::class, 'userOrderDetails']);
     });
 
+    // review routes
+    Route::prefix('review')->group(function () {
+        Route::post('create', [ReviewController::class, 'store']);
+        Route::get('service/{service}', [ReviewController::class, 'getServiceReviews']);
+    });
+
     Route::prefix('professional')->group(function () {
         Route::get('orders', [OrderController::class, 'getOrder']);
         Route::get('order/details/{order_id}', [OrderController::class, 'orderDetails']);
@@ -78,6 +85,8 @@ Route::prefix('v1')->group(function () {
         Route::post('save/token', [NotificationController::class, 'saveFCMToken']);
         Route::get('notify', [NotificationController::class, 'sendNotification']);
     });
+
+    Route::post('/account/delete', [AuthController::class, 'deleteAccount']);
 
     Route::get('support/{user_type}', [SettingsController::class, 'support']);
     Route::get('social-links', [SettingsController::class, 'socialLinks']);
