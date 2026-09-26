@@ -28,7 +28,10 @@ class ReviewController extends Controller
             'status' => true,
             'message' => 'Review retrive successfully!',
             'code' => 200,
-            'data' => $reviews,
+            'data' => [
+                'service_average_ratting' => $service->averageRating(),
+                'reviews'                => $reviews
+            ],
             'description' => null,
         ]);
     }
