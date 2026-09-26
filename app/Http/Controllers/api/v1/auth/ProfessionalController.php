@@ -305,6 +305,7 @@ class ProfessionalController extends Controller
                 'phone' => $user->phone,
                 'name' => $user->full_name,
                 'profile_picture' => $user->profile_picture,
+                'ratting' => $user->providerAverageRating,
                 'token' => $token,  // Only if using token authentication
             ],
         ], 200);
