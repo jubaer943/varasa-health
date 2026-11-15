@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\auth\AuthController;
 use App\Http\Controllers\api\v1\auth\ProfessionalController;
 use App\Http\Controllers\api\v1\home\DashboardController;
-use App\Http\Controllers\Api\V1\Home\EarningController;
+use App\Http\Controllers\api\v1\home\EarningController;
 use App\Http\Controllers\api\v1\home\ServiceController;
 use App\Http\Controllers\api\v1\home\OrderController;
 use App\Http\Controllers\api\v1\NotificationController;
@@ -27,6 +27,11 @@ Route::prefix('v1')->group(function () {
         Route::post('login', [AuthController::class, 'user_login']);
         Route::post('location', [AuthController::class, 'add_location']);
         Route::get('saved/address', [AuthController::class, 'savedLocation']);
+        Route::post('location/update/{id?}', [AuthController::class, 'update_location']);
+        Route::put('location/{id}', [AuthController::class, 'update_location']);
+        Route::delete('location/delete/{id?}', [AuthController::class, 'delete_location']);
+        Route::delete('location/{id}', [AuthController::class, 'delete_location']);
+        Route::post('location/delete/{id?}', [AuthController::class, 'delete_location']);
         Route::get('check', [AuthController::class, 'checkToken']);
     });
 
@@ -49,10 +54,22 @@ Route::prefix('v1')->group(function () {
         Route::post('verify', [ProfessionalController::class, 'otpVerify']);
         Route::post('information', [ProfessionalController::class, 'othersInfo']);
         Route::post('document', [ProfessionalController::class, 'document']);
+        Route::get('verification-status', [ProfessionalController::class, 'verificationStatus']);
+        Route::get('document-status', [ProfessionalController::class, 'verificationStatus']);
         Route::post('login', [ProfessionalController::class, 'login']);
         Route::get('profile', [ProfessionalController::class, 'profile']);
         Route::post('profile/update', [ProfessionalController::class, 'profileUpdate']);
         Route::post('change/password', [ProfessionalController::class, 'changePassword']);
+        
+        // Forgot Password routes
+        Route::post('forgot-password/sentotp', [ProfessionalController::class, 'forgotPasswordSentOtp']);
+        Route::post('forgot-password/send-otp', [ProfessionalController::class, 'forgotPasswordSentOtp']);
+        Route::post('forgot-password/verify', [ProfessionalController::class, 'forgotPasswordVerify']);
+        Route::post('forgot-password/reset', [ProfessionalController::class, 'forgotPasswordReset']);
+        Route::post('forgot/password/sentotp', [ProfessionalController::class, 'forgotPasswordSentOtp']);
+        Route::post('forgot/password/verify', [ProfessionalController::class, 'forgotPasswordVerify']);
+        Route::post('forgot/password/reset', [ProfessionalController::class, 'forgotPasswordReset']);
+        Route::post('reset/password', [ProfessionalController::class, 'forgotPasswordReset']);
     });
 
     // order routes 
@@ -79,6 +96,10 @@ Route::prefix('v1')->group(function () {
         Route::post('pay', [EarningController::class, 'payment']);
         Route::post('location', [ProfessionalController::class, 'updateLocation']);
         Route::get('transaction/history', [EarningController::class, 'transactionHistory']);
+        Route::get('transaction-history', [EarningController::class, 'transactionHistory']);
+        Route::get('payment/history', [EarningController::class, 'transactionHistory']);
+        Route::get('payment-history', [EarningController::class, 'transactionHistory']);
+        Route::get('transactions', [EarningController::class, 'transactionHistory']);
     });
     Route::prefix('notification')->group(function () {
         Route::get('/{user_type}', [NotificationController::class, 'allNotifications']);
@@ -88,10 +109,15 @@ Route::prefix('v1')->group(function () {
 
     Route::post('/account/delete', [AuthController::class, 'deleteAccount']);
 
-    Route::get('support/{user_type}', [SettingsController::class, 'support']);
+    Route::get('support/{user_type?}', [SettingsController::class, 'support']);
+    Route::get('help/{user_type?}', [SettingsController::class, 'support']);
+    Route::get('faqs/{user_type?}', [SettingsController::class, 'support']);
+    Route::get('faq/{user_type?}', [SettingsController::class, 'support']);
     Route::get('social-links', [SettingsController::class, 'socialLinks']);
     Route::get('policy/{user_type}', [SettingsController::class, 'policy']);
     Route::get('terms/{user_type}', [SettingsController::class, 'terms']);
+    Route::get('about-us/{user_type?}', [SettingsController::class, 'aboutUs']);
+    Route::get('about/{user_type?}', [SettingsController::class, 'aboutUs']);
     Route::post('sms', [NotificationController::class, 'testSms']);
     Route::get('check-fcm-token', [NotificationController::class, 'checkFCMToken']);
 });

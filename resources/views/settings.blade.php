@@ -46,17 +46,24 @@
 
 
                     <button class="buttons" type="button">
-
                         <p>Terms & Condition</p>
-
                         <img src="{{ asset('assets/images/arrow-right-white.png') }}" alt="">
+                    </button>
 
+                    <button class="buttons" type="button">
+                        <p>Refund Policy</p>
+                        <img src="{{ asset('assets/images/arrow-right-green.png') }}" alt="">
+                    </button>
+
+                    <button class="buttons" type="button">
+                        <p>About Us</p>
+                        <img src="{{ asset('assets/images/arrow-right-green.png') }}" alt="">
                     </button>
 
 
                     <button class="buttons" type="button">
 
-                        <p>About Us</p>
+                        <p>Contact & Website Info</p>
 
                         <img src="{{ asset('assets/images/arrow-right-green.png') }}" alt="">
 
@@ -65,7 +72,7 @@
 
                     <button class="buttons" type="button">
 
-                        <p>Contact Us</p>
+                        <p>App Download Links</p>
 
                         <img src="{{ asset('assets/images/arrow-right-green.png') }}" alt="">
 
@@ -144,9 +151,8 @@
 
 
                             <!-- Hidden Data Storage -->
-
                             <textarea class="quill-editor-area" style="display: none;"
-                                data-content="{{ $userPrivacyPolicy->privacy_policy_description ?? '' }}"></textarea>
+                                data-content="{{ $userPrivacyPolicy->description ?? '' }}"></textarea>
 
 
                         </div>
@@ -191,9 +197,8 @@
 
 
                             <!-- Hidden Data Storage -->
-
                             <textarea class="quill-editor-area" style="display: none;"
-                                data-content="{{ $professionalPrivacyPolicy->privacy_policy_description ?? '' }}"></textarea>
+                                data-content="{{ $professionalPrivacyPolicy->description ?? '' }}"></textarea>
 
 
                         </div>
@@ -271,8 +276,8 @@
 
 
                             <!-- Hidden Data Storage -->
-
-                            <textarea class="quill-editor-area" style="display: none;" data-content=""></textarea>
+                            <textarea class="quill-editor-area" style="display: none;"
+                                data-content="{{ $userTermsCondition->description ?? '' }}"></textarea>
 
 
                         </div>
@@ -317,22 +322,46 @@
 
 
                             <!-- Hidden Data Storage -->
-
-                            <textarea class="quill-editor-area" style="display: none;" data-content=""></textarea>
-
-
+                            <textarea class="quill-editor-area" style="display: none;"
+                                data-content="{{ $professionalTermsCondition->description ?? '' }}"></textarea>
                         </div>
-
                     </form>
 
-
                     <!-- Save terms -->
-
                     <button id="saveTermsConditon" class="save" type="button">
                         Save Terms & Condition
                     </button>
+                </div>
 
+                <!-- =====================================================
+                        REFUND POLICY
+                    ====================================================== -->
 
+                <div class="contents Refund-policy">
+                    <form id="refundPolicyForm" class="privacy-form" onsubmit="return false;">
+                        <h3>
+                            Cancellation & Refund Policy
+                        </h3>
+
+                        <div class="Published">
+                            <button type="button">v1.0.0</button>
+                            <p>Published on <span>Website</span></p>
+                        </div>
+
+                        <div class="policy_text_area">
+                            <!-- Quill Editor -->
+                            <div class="quill-editor" style="height: 320px;"></div>
+
+                            <!-- Hidden Data Storage -->
+                            <textarea class="quill-editor-area" style="display: none;"
+                                data-content="{{ $refundPolicy->description ?? '' }}"></textarea>
+                        </div>
+
+                        <!-- Save refund policy -->
+                        <button id="saveRefundPolicy" class="save" type="button" style="margin-top: 25px;">
+                            Save Refund Policy
+                        </button>
+                    </form>
                 </div>
 
 
@@ -437,39 +466,207 @@
 
                 <div class="contents Contact-us">
 
-
-                    <form id="contactUsForm">
-
+                    <form id="contactUsForm" onsubmit="return false;">
 
                         <h3>
-                            Contact Us
+                            Contact & Public Website Info
                         </h3>
 
+                        <p style="font-size: 13px; color: #64748b; margin-top: 5px; margin-bottom: 20px;">
+                            Manage emergency helplines, WhatsApp dispatch, support email, Dhaka clinic address, service coverage, and social media links displayed across the public landing page.
+                        </p>
 
-                        <div class="contact-us-input">
-
-
-                            <img src="{{ asset('assets/images/call.png') }}" alt="varasa call icon">
-
-
-                            <input class="contact-input" type="text" name="contactUs" id="contactUs"
-                                placeholder="665656">
-
-
-                            <img class="contact-edit" src="{{ asset('assets/images/edit-2.png') }}"
-                                alt="varasa edit icon">
-
-
+                        <!-- Primary Helpline Phone -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                Primary Helpline Phone Number *
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="text" name="helpline_number" id="contactUs"
+                                    value="{{ $siteSettings['helpline_number'] ?? $contactUs->description ?? '01859-382953' }}"
+                                    placeholder="01859-382953">
+                            </div>
                         </div>
 
+                        <!-- Alternate Helpline Phone -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                Secondary / Alternate Phone Number
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="text" name="helpline_alt" id="helplineAlt"
+                                    value="{{ $siteSettings['helpline_alt'] ?? '01859-382253' }}"
+                                    placeholder="01859-382253">
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Dispatch Number -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                WhatsApp Dispatch Number (with country code) *
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="text" name="whatsapp_number" id="whatsappNumber"
+                                    value="{{ $siteSettings['whatsapp_number'] ?? '8801859382953' }}"
+                                    placeholder="8801859382953">
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Message Template -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                WhatsApp Default Message Template
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="text" name="whatsapp_message" id="whatsappMessage"
+                                    value="{{ $siteSettings['whatsapp_message'] ?? 'Hello Varasa Health, I would like to inquire about booking a home caregiver or nurse.' }}"
+                                    placeholder="Hello Varasa Health, I would like to inquire about booking a home caregiver or nurse.">
+                            </div>
+                            <span style="font-size: 11px; color: #64748b; margin-top: 4px; display: block;">
+                                Pre-filled text that appears when clients click the floating WhatsApp button or chat links.
+                            </span>
+                        </div>
+
+                        <!-- Support Email -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                Support Email Address
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="email" name="support_email" id="supportEmail"
+                                    value="{{ $siteSettings['support_email'] ?? 'support@varasahealth.com' }}"
+                                    placeholder="support@varasahealth.com">
+                            </div>
+                        </div>
+
+                        <!-- Office Address -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                Dhaka Office / Clinic Address
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="text" name="office_address" id="officeAddress"
+                                    value="{{ $siteSettings['office_address'] ?? 'House 57, Road 25, Block A, Banani, Dhaka' }}"
+                                    placeholder="House 57, Road 25, Block A, Banani, Dhaka">
+                            </div>
+                        </div>
+
+                        <!-- Service Coverage Area -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                Service Coverage Notice (Top Bar)
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="text" name="service_area" id="serviceArea"
+                                    value="{{ $siteSettings['service_area'] ?? 'Serving All Zones Across Dhaka Metro' }}"
+                                    placeholder="Serving All Zones Across Dhaka Metro">
+                            </div>
+                        </div>
+
+                        <!-- Social Media: Facebook & LinkedIn -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 18px;">
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                    Facebook Page URL
+                                </label>
+                                <div class="contact-us-input" style="margin-top: 0;">
+                                    <input class="contact-input" type="url" name="facebook_url" id="facebookUrl"
+                                        value="{{ $siteSettings['facebook_url'] ?? 'https://facebook.com' }}"
+                                        placeholder="https://facebook.com/varasahealth">
+                                </div>
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                    LinkedIn Page URL
+                                </label>
+                                <div class="contact-us-input" style="margin-top: 0;">
+                                    <input class="contact-input" type="url" name="linkedin_url" id="linkedinUrl"
+                                        value="{{ $siteSettings['linkedin_url'] ?? 'https://linkedin.com' }}"
+                                        placeholder="https://linkedin.com/company/varasahealth">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Landing Page Hero Headline -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                Landing Page Hero Headline
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="text" name="hero_title" id="heroTitle"
+                                    value="{{ $siteSettings['hero_title'] ?? 'Professional Healthcare & Nursing Care at Your Home' }}"
+                                    placeholder="Professional Healthcare & Nursing Care at Your Home">
+                            </div>
+                        </div>
+
+                        <!-- Landing Page Hero Subtitle -->
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+                                Landing Page Hero Subtitle
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="text" name="hero_subtitle" id="heroSubtitle"
+                                    value="{{ $siteSettings['hero_subtitle'] ?? 'Verified male & female nurses, elderly caregivers, physiotherapists, and diagnostic testing delivered directly to your doorstep in Dhaka.' }}"
+                                    placeholder="Verified male & female nurses...">
+                            </div>
+                        </div>
 
                         <button id="saveContactUs" class="save" type="submit">
-                            Save
+                            Save Contact & Website Info
                         </button>
-
 
                     </form>
 
+                </div>
+
+
+                <!-- =====================================================
+                        APP DOWNLOAD LINKS
+                    ====================================================== -->
+
+                <div class="contents App-download-links">
+
+                    <form id="appLinksForm" onsubmit="return false;">
+
+                        <h3>
+                            App Download Links
+                        </h3>
+
+                        <p style="font-size: 13px; color: #64748b; margin-top: 5px; margin-bottom: 20px;">
+                            Configure your Android Google Play Store and iOS Apple App Store download URLs. When a URL is saved, its download card/button will automatically show on the public website. If empty, the card is hidden.
+                        </p>
+
+                        <!-- Android Input -->
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 8px;">
+                                <img src="{{ asset('assets/images/android logo.png') }}" style="width: 18px; height: 18px;" alt="Android">
+                                <span>Google Play Store URL (Android)</span>
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="url" name="android_url" id="androidUrl"
+                                    value="{{ $androidUrl ?? '' }}"
+                                    placeholder="https://play.google.com/store/apps/details?id=com.varasahealth.app">
+                            </div>
+                        </div>
+
+                        <!-- iOS Input -->
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 8px;">
+                                <img src="{{ asset('assets/images/ios logo.png') }}" style="width: 18px; height: 18px;" alt="iOS">
+                                <span>Apple App Store URL (iOS)</span>
+                            </label>
+                            <div class="contact-us-input" style="margin-top: 0;">
+                                <input class="contact-input" type="url" name="ios_url" id="iosUrl"
+                                    value="{{ $iosUrl ?? '' }}"
+                                    placeholder="https://apps.apple.com/app/varasa-health/id123456789">
+                            </div>
+                        </div>
+
+                        <button id="saveAppLinks" class="save" type="submit">
+                            Save App Links
+                        </button>
+
+                    </form>
 
                 </div>
 
@@ -1300,6 +1497,31 @@
 
             /*
             |--------------------------------------------------------------------------
+            | SAVE REFUND POLICY
+            |--------------------------------------------------------------------------
+            */
+
+            var saveRefundButton = document.getElementById('saveRefundPolicy');
+
+            if (saveRefundButton) {
+                saveRefundButton.addEventListener('click', async function () {
+                    var refundTextarea = document.querySelector('#refundPolicyForm .quill-editor-area');
+
+                    await ajaxUpdate({
+                        url: '{{ url('/settings/save-refund-policy') }}',
+                        method: 'POST',
+                        button: this,
+                        data: {
+                            refund_policy: refundTextarea ? refundTextarea.value : ''
+                        },
+                        successMessage: 'Cancellation & Refund Policy saved successfully!'
+                    });
+                });
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
             | SAVE ABOUT US
             |--------------------------------------------------------------------------
             */
@@ -1418,13 +1640,17 @@
                             );
 
 
-                        var contactValue =
-                            contactInput
-                                ?
-                                contactInput.value.trim()
-                                :
-                                '';
-
+                        var contactValue = contactInput ? contactInput.value.trim() : '';
+                        var helplineAlt = document.getElementById('helplineAlt') ? document.getElementById('helplineAlt').value.trim() : '';
+                        var whatsappNumber = document.getElementById('whatsappNumber') ? document.getElementById('whatsappNumber').value.trim() : '';
+                        var whatsappMessage = document.getElementById('whatsappMessage') ? document.getElementById('whatsappMessage').value.trim() : '';
+                        var supportEmail = document.getElementById('supportEmail') ? document.getElementById('supportEmail').value.trim() : '';
+                        var officeAddress = document.getElementById('officeAddress') ? document.getElementById('officeAddress').value.trim() : '';
+                        var serviceArea = document.getElementById('serviceArea') ? document.getElementById('serviceArea').value.trim() : '';
+                        var facebookUrl = document.getElementById('facebookUrl') ? document.getElementById('facebookUrl').value.trim() : '';
+                        var linkedinUrl = document.getElementById('linkedinUrl') ? document.getElementById('linkedinUrl').value.trim() : '';
+                        var heroTitle = document.getElementById('heroTitle') ? document.getElementById('heroTitle').value.trim() : '';
+                        var heroSubtitle = document.getElementById('heroSubtitle') ? document.getElementById('heroSubtitle').value.trim() : '';
 
                         /*
                         |--------------------------------------------------------------------------
@@ -1433,18 +1659,9 @@
                         */
 
                         if (!contactValue) {
-
-
-                            alert(
-                                'Please enter contact information.'
-                            );
-
-
+                            alert('Please enter a primary helpline phone number.');
                             return;
-
-
                         }
-
 
                         /*
                         |--------------------------------------------------------------------------
@@ -1452,38 +1669,26 @@
                         |--------------------------------------------------------------------------
                         */
 
-                        await ajaxUpdate(
-                            {
-
-
-                                url:
-                                    '{{ url('/save-contact-us') }}',
-
-
-                                method:
-                                    'POST',
-
-
-                                button:
-                                    saveContactButton,
-
-
-                                data: {
-
-
-                                    contact_us:
-                                        contactValue
-
-
-                                },
-
-
-                                successMessage:
-                                    'Contact information saved successfully!'
-
-
-                            }
-                        );
+                        await ajaxUpdate({
+                            url: '{{ url('/save-contact-us') }}',
+                            method: 'POST',
+                            button: saveContactButton,
+                            data: {
+                                contact_us: contactValue,
+                                helpline_number: contactValue,
+                                helpline_alt: helplineAlt,
+                                whatsapp_number: whatsappNumber,
+                                whatsapp_message: whatsappMessage,
+                                support_email: supportEmail,
+                                office_address: officeAddress,
+                                service_area: serviceArea,
+                                facebook_url: facebookUrl,
+                                linkedin_url: linkedinUrl,
+                                hero_title: heroTitle,
+                                hero_subtitle: heroSubtitle
+                            },
+                            successMessage: 'Website & Contact information saved successfully!'
+                        });
 
 
                     }
@@ -1492,6 +1697,32 @@
 
             }
 
+
+            /*
+            |--------------------------------------------------------------------------
+            | SAVE APP DOWNLOAD LINKS
+            |--------------------------------------------------------------------------
+            */
+            var appLinksForm = document.getElementById('appLinksForm');
+            if (appLinksForm) {
+                appLinksForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    var androidInput = document.getElementById('androidUrl');
+                    var iosInput = document.getElementById('iosUrl');
+                    var saveBtn = document.getElementById('saveAppLinks');
+
+                    await ajaxUpdate({
+                        url: '{{ route('save.app.links') }}',
+                        method: 'POST',
+                        button: saveBtn,
+                        data: {
+                            android_url: androidInput ? androidInput.value.trim() : '',
+                            ios_url: iosInput ? iosInput.value.trim() : ''
+                        },
+                        successMessage: 'App download links saved successfully!'
+                    });
+                });
+            }
 
         });
 

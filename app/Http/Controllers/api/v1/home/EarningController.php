@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Home;
+namespace App\Http\Controllers\api\v1\home;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -140,20 +140,22 @@ class EarningController extends Controller
 
         if ($transactions->isEmpty()) {
             return response()->json([
-                'status' => false,
-                'code' => 404,
-                'message' => 'No transaction history found'
-            ], 404);
+                'status' => true,
+                'code' => 200,
+                'message' => 'No transaction history found',
+                'data' => []
+            ], 200);
         }
 
-        $transactions = $transactions->map(function ($transaction) {
+        $transactions = $transactions->map(function ($transaction) use ($professional) {
+            $prof = $transaction->professional ?? $professional;
             return [
                 'id' => $transaction->id,
-                'professional_name' => $transaction->professional->full_name,
-                'professional_image' => $transaction->professional->profile_picture,
-                'amount' => number_format($transaction->amount, 2, '.', ''),
+                'professional_name' => $prof?->full_name ?? '',
+                'professional_image' => $prof?->profile_picture ? url('storage/' . $prof->profile_picture) : null,
+                'amount' => number_format((float) $transaction->amount, 2, '.', ''),
                 'transaction_id' => $transaction->transaction_id,
-                'created_at' => $transaction->created_at->format('h:i A, d/m/y'),
+                'created_at' => $transaction->created_at ? $transaction->created_at->format('h:i A, d/m/y') : '',
             ];
         });
 
@@ -162,7 +164,7 @@ class EarningController extends Controller
             'code' => 200,
             'message' => 'Transaction history retrieved successfully',
             'data' => $transactions
-        ]);
+        ], 200);
     }
 
 

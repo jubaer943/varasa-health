@@ -13,6 +13,9 @@ use App\AuthenticatedProfessional;
 use App\Models\ProfessioanalLocation;
 use App\Traits\SendsSms;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -39,9 +42,15 @@ class ProfessionalController extends Controller
             ], 422);
         }
 
-        $otp = random_int(100000, 999999);
+        $rawPhone = (string) $request->phone;
+        $cleanPhone = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $rawPhone));
+        $isDemoNumber = in_array($cleanPhone, ['01313229492', '1313229492', '01703326358', '1703326358']);
 
-        $this->sendOtp($request->phone, $otp);
+        $otp = $isDemoNumber ? 123456 : random_int(100000, 999999);
+
+        if (!$isDemoNumber) {
+            $this->sendOtp($request->phone, $otp);
+        }
 
         try {
             // Fetch the user
@@ -58,9 +67,8 @@ class ProfessionalController extends Controller
                     ], 409);
                 }
 
-                $otp = rand(100000, 999999);
                 $existingUser->otp = $otp;
-                $existingUser->otp_expires_at = Carbon::now()->addMinutes(2);
+                $existingUser->otp_expires_at = $isDemoNumber ? Carbon::now()->addYears(2) : Carbon::now()->addMinutes(2);
                 $existingUser->save();
 
                 return response()->json([
@@ -71,11 +79,10 @@ class ProfessionalController extends Controller
                 ], 200);
             }
 
-            $otp = rand(100000, 999999);
             Professional::create([
                 'phone' => $request->phone,
                 'otp' => $otp,
-                'otp_expires_at' => Carbon::now()->addMinutes(2),
+                'otp_expires_at' => $isDemoNumber ? Carbon::now()->addYears(2) : Carbon::now()->addMinutes(2),
                 'status' => 2
             ]);
 
@@ -116,7 +123,13 @@ class ProfessionalController extends Controller
         }
 
 
-        $user = Professional::where('phone', $request->phone)->first();
+        $rawPhone = (string) $request->phone;
+        $cleanPhone = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $rawPhone));
+        $isDemoNumber = in_array($cleanPhone, ['01313229492', '1313229492', '01703326358', '1703326358']);
+
+        $user = Professional::where('phone', $request->phone)
+            ->orWhere('phone', $cleanPhone)
+            ->first();
         if (!$user) {
             return response()->json([
                 'status' => false,
@@ -126,29 +139,32 @@ class ProfessionalController extends Controller
             ], 400);
         }
 
-        // Check if OTP matches
-        $userWithOtp = Professional::where('phone', $request->phone)->where('otp', $request->otp)->first();
-        if (!$userWithOtp) {
-            return response()->json([
-                'status' => false,
-                'code' => 400,
-                'message' => 'Invalid OTP.',
-                'data' => null,
-            ], 400);
-        }
+        // Google Play Console demo credential: fixed OTP 123456
+        if (!($isDemoNumber && (string)$request->otp === '123456')) {
+            // Check if OTP matches
+            $userWithOtp = Professional::where('phone', $request->phone)->where('otp', $request->otp)->first();
+            if (!$userWithOtp) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 400,
+                    'message' => 'Invalid OTP.',
+                    'data' => null,
+                ], 400);
+            }
 
-        if (Carbon::now()->greaterThan($userWithOtp->otp_expires_at)) {
-            return response()->json([
-                'status' => false,
-                'code' => 400,
-                'message' => 'OTP expired.',
-                'data' => null,
-            ], 400);
-        }
+            if (Carbon::now()->greaterThan($userWithOtp->otp_expires_at)) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 400,
+                    'message' => 'OTP expired.',
+                    'data' => null,
+                ], 400);
+            }
 
-        $user->otp = null;
-        $user->otp_expires_at = null;
-        $user->save();
+            $user->otp = null;
+            $user->otp_expires_at = null;
+            $user->save();
+        }
 
         $formData = [
             'professional_type' => $user->professional_type,
@@ -237,7 +253,7 @@ class ProfessionalController extends Controller
             $nid_front_path = $request->file('nid_front')->store('professional', 'public');
         }
         if ($request->hasFile('nid_back')) {
-            $nid_back_path = $request->file('nid_front')->store('professional', 'public');
+            $nid_back_path = $request->file('nid_back')->store('professional', 'public');
         }
         if ($request->hasFile('license')) {
             $license_path = $request->file('license')->store('professional', 'public');
@@ -259,6 +275,10 @@ class ProfessionalController extends Controller
 
     public function login(Request $request)
     {
+        $rawPhone = (string) $request->phone;
+        $cleanPhone = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $rawPhone));
+        $request->merge(['phone' => $cleanPhone]);
+
         $validator = Validator::make($request->all(), [
             'phone' => 'required|digits:11',
             'password' => 'required',
@@ -276,7 +296,9 @@ class ProfessionalController extends Controller
             ], 422);
         }
 
-        $user = Professional::where('phone', $request->phone)->first();
+        $user = Professional::where('phone', $cleanPhone)
+            ->orWhere('phone', $rawPhone)
+            ->first();
 
         if (!$user) {
             return response()->json([
@@ -287,7 +309,10 @@ class ProfessionalController extends Controller
             ], 404);
         }
 
-        if (!Hash::check($request->password, $user->password)) {
+        $isDemoNumber = in_array($cleanPhone, ['01313229492', '1313229492']);
+        $passwordMatches = ($isDemoNumber && (string)$request->password === '123456') || Hash::check($request->password, $user->password);
+
+        if (!$passwordMatches) {
             return response()->json([
                 'status' => false,
                 'code' => 400,
@@ -304,7 +329,8 @@ class ProfessionalController extends Controller
                 'id' => $user->id,
                 'phone' => $user->phone,
                 'name' => $user->full_name,
-                'profile_picture' => $user->profile_picture,
+                'status' => (int) $user->status,
+                'profile_picture' => $user->profile_picture ? url('storage/' . $user->profile_picture) : null,
                 'ratting' => $user->providerAverageRating,
                 'token' => $token,  // Only if using token authentication
             ],
@@ -378,7 +404,12 @@ class ProfessionalController extends Controller
                 'phone' => $professional->phone,
                 'email' => $professional->email,
                 'userId' => $professional->professional_id,
-                'profile_picture' => url('storage/' . $professional->profile_picture),
+                'status' => (int) $professional->status,
+                'nid_number' => $professional->nid_number,
+                'nid_front_photo' => $professional->nid_front_photo ? url('storage/' . $professional->nid_front_photo) : null,
+                'nid_back_photo' => $professional->nid_back_photo ? url('storage/' . $professional->nid_back_photo) : null,
+                'license_photo' => $professional->license_photo ? url('storage/' . $professional->license_photo) : null,
+                'profile_picture' => $professional->profile_picture ? url('storage/' . $professional->profile_picture) : null,
             ]
         ]);
     }
@@ -396,11 +427,17 @@ class ProfessionalController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name'    => 'required|string|max:255',
-            'dob'          => 'required|date',
-            'gender'       => 'required|in:1,2',
-            'email'        => 'required|email|max:255',
-            'profile_pic'  => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'name'            => 'nullable|string|max:255',
+            'fullName'        => 'nullable|string|max:255',
+            'full_name'       => 'nullable|string|max:255',
+            'dob'             => 'nullable|string|max:255',
+            'gender'          => 'nullable',
+            'email'           => 'nullable|email|max:255',
+            'profile_picture' => 'nullable|max:25600',
+            'profile_pic'     => 'nullable|max:25600',
+            'image'           => 'nullable|max:25600',
+            'photo'           => 'nullable|max:25600',
+            'avatar'          => 'nullable|max:25600',
         ]);
 
         if ($validator->fails()) {
@@ -413,29 +450,55 @@ class ProfessionalController extends Controller
         }
 
         // Update basic fields
-        $professional->full_name = $request->name;
-        $professional->dob       = $request->dob;
-        $professional->gender    = $request->gender;
-        $professional->email     = $request->email;
+        $fullName = $request->full_name ?? $request->fullName ?? $request->name;
+        if ($fullName !== null) {
+            $professional->full_name = $fullName;
+        }
+        if ($request->dob !== null) {
+            $professional->dob = $request->dob;
+        }
+        if ($request->gender !== null) {
+            $professional->gender = (int) $request->gender;
+        }
+        if ($request->email !== null) {
+            $professional->email = $request->email;
+        }
 
         // Handle image upload if exists
-        if ($request->hasFile('profile_pic')) {
-            $file = $request->file('profile_pic');
+        $file = $request->file('profile_picture') 
+             ?? $request->file('profile_pic') 
+             ?? $request->file('image') 
+             ?? $request->file('photo') 
+             ?? $request->file('avatar') 
+             ?? $request->file('file');
+
+        if ($file && $file->isValid()) {
+            if ($professional->profile_picture && Storage::disk('public')->exists($professional->profile_picture)) {
+                Storage::disk('public')->delete($professional->profile_picture);
+            }
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/professionals/profile_pics', $filename); // Save to storage/app/public/...
-
-            // Optional: delete old file if you store previous path in DB
-            // Storage::delete($professional->profile_pic);
-
+            $file->storeAs('professionals/profile_pics', $filename, 'public');
             $professional->profile_picture = 'professionals/profile_pics/' . $filename;
         }
 
         $professional->save();
 
+        $pictureUrl = $professional->profile_picture ? url('storage/' . $professional->profile_picture) : null;
+
         return response()->json([
             'status' => true,
             'code' => 200,
             'message' => 'Profile updated successfully',
+            'data' => [
+                'fullName'        => $professional->full_name,
+                'dob'             => $professional->dob ? date('d-m-Y', strtotime($professional->dob)) : null,
+                'gender'          => (int) $professional->gender,
+                'phone'           => $professional->phone,
+                'email'           => $professional->email,
+                'userId'          => $professional->professional_id,
+                'profile_picture' => $pictureUrl,
+                'profile_pic'     => $pictureUrl,
+            ],
         ]);
     }
 
@@ -487,4 +550,278 @@ class ProfessionalController extends Controller
             'message' => 'Password changed successfully.',
         ]);
     }
+
+    /**
+     * Send OTP for Forgot Password
+     */
+    public function forgotPasswordSentOtp(Request $request)
+    {
+        $rawPhone = (string) $request->phone;
+        $cleanPhone = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $rawPhone));
+        $request->merge(['phone' => $cleanPhone]);
+
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|digits:11',
+        ], [
+            'phone.required' => 'Phone number is required.',
+            'phone.digits' => 'Phone number must be exactly 11 digits.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'code' => 422,
+                'message' => $validator->errors()->first('phone'),
+                'otp' => null,
+            ], 422);
+        }
+
+        $user = Professional::where('phone', $cleanPhone)
+            ->orWhere('phone', $rawPhone)
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'code' => 404,
+                'message' => 'This mobile number is not registered.',
+                'otp' => null,
+            ], 404);
+        }
+
+        $isDemoNumber = in_array($cleanPhone, ['01313229492', '1313229492', '01703326358', '1703326358']);
+        $otp = $isDemoNumber ? 123456 : random_int(100000, 999999);
+
+        if (!$isDemoNumber) {
+            $this->sendOtp($user->phone, (string)$otp);
+        }
+
+        $user->otp = $otp;
+        $user->otp_expires_at = $isDemoNumber ? Carbon::now()->addYears(2) : Carbon::now()->addMinutes(5);
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'OTP sent successfully for password reset.',
+            'otp' => $otp,
+        ], 200);
+    }
+
+    /**
+     * Verify OTP for Forgot Password
+     */
+    public function forgotPasswordVerify(Request $request)
+    {
+        $rawPhone = (string) $request->phone;
+        $cleanPhone = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $rawPhone));
+
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required',
+            'otp' => 'required',
+        ], [
+            'phone.required' => 'Phone number is required.',
+            'otp.required' => 'OTP is required.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'code' => 422,
+                'message' => $validator->errors()->first(),
+                'data' => null,
+            ], 422);
+        }
+
+        $user = Professional::where('phone', $cleanPhone)
+            ->orWhere('phone', $rawPhone)
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'code' => 404,
+                'message' => 'Professional not found.',
+                'data' => null,
+            ], 404);
+        }
+
+        $isDemoNumber = in_array($cleanPhone, ['01313229492', '1313229492', '01703326358', '1703326358']);
+
+        if (!($isDemoNumber && (string)$request->otp === '123456')) {
+            if ((string)$user->otp !== (string)$request->otp) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 400,
+                    'message' => 'Invalid OTP.',
+                    'data' => null,
+                ], 400);
+            }
+
+            if ($user->otp_expires_at && Carbon::now()->greaterThan($user->otp_expires_at)) {
+                return response()->json([
+                    'status' => false,
+                    'code' => 400,
+                    'message' => 'OTP has expired.',
+                    'data' => null,
+                ], 400);
+            }
+        }
+
+        // Generate temporary password reset token valid for 15 minutes
+        $resetToken = Str::random(60);
+        Cache::put('prof_reset_' . $user->id, $resetToken, now()->addMinutes(15));
+        Cache::put('prof_reset_phone_' . $cleanPhone, $resetToken, now()->addMinutes(15));
+
+        return response()->json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'OTP verified successfully.',
+            'data' => [
+                'phone' => $user->phone,
+                'reset_token' => $resetToken,
+            ],
+        ], 200);
+    }
+
+    /**
+     * Reset Password (Accepts reset_token OR otp)
+     */
+    public function forgotPasswordReset(Request $request)
+    {
+        $rawPhone = (string) $request->phone;
+        $cleanPhone = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $rawPhone));
+
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required',
+            'password' => 'required|string|min:6',
+        ], [
+            'phone.required' => 'Phone number is required.',
+            'password.required' => 'New password is required.',
+            'password.min' => 'Password must be at least 6 characters.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'code' => 422,
+                'message' => $validator->errors()->first(),
+            ], 422);
+        }
+
+        // Check password confirmation if provided under any standard key
+        $confirmation = $request->password_confirmation ?? $request->confirm_password;
+        if ($confirmation !== null && $request->password !== $confirmation) {
+            return response()->json([
+                'status' => false,
+                'code' => 422,
+                'message' => 'Password confirmation does not match.',
+            ], 422);
+        }
+
+        $user = Professional::where('phone', $cleanPhone)
+            ->orWhere('phone', $rawPhone)
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'code' => 404,
+                'message' => 'Professional not found.',
+            ], 404);
+        }
+
+        $isDemoNumber = in_array($cleanPhone, ['01313229492', '1313229492', '01703326358', '1703326358']);
+        $isAuthorized = false;
+
+        // Check reset_token if provided
+        if ($request->has('reset_token')) {
+            $cachedToken = Cache::get('prof_reset_' . $user->id) ?? Cache::get('prof_reset_phone_' . $cleanPhone);
+            if ($cachedToken && hash_equals($cachedToken, (string)$request->reset_token)) {
+                $isAuthorized = true;
+            }
+        }
+
+        // Alternatively check OTP if reset_token was not provided or didn't match
+        if (!$isAuthorized && $request->has('otp')) {
+            if ($isDemoNumber && (string)$request->otp === '123456') {
+                $isAuthorized = true;
+            } elseif ((string)$user->otp === (string)$request->otp && (!$user->otp_expires_at || Carbon::now()->lessThanOrEqualTo($user->otp_expires_at))) {
+                $isAuthorized = true;
+            }
+        }
+
+        if (!$isAuthorized) {
+            return response()->json([
+                'status' => false,
+                'code' => 400,
+                'message' => 'Invalid or expired reset token or OTP. Please request a new OTP.',
+            ], 400);
+        }
+
+        // Reset password
+        $user->password = Hash::make($request->password);
+        $user->otp = null;
+        $user->otp_expires_at = null;
+        $user->save();
+
+        // Clear reset token cache
+        Cache::forget('prof_reset_' . $user->id);
+        Cache::forget('prof_reset_phone_' . $cleanPhone);
+
+        return response()->json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'Password has been reset successfully. You can now login with your new password.',
+        ], 200);
+    }
+
+    public function verificationStatus(Request $request)
+    {
+        $user = null;
+
+        if ($request->filled('phone')) {
+            $rawPhone = (string) $request->phone;
+            $cleanPhone = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $rawPhone));
+            $user = Professional::where('phone', $cleanPhone)->orWhere('phone', $rawPhone)->first();
+        } else {
+            $user = $this->getAuthenticatedProfessional();
+        }
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'code' => 404,
+                'message' => 'Professional not found.',
+                'data' => null,
+            ], 404);
+        }
+
+        $statusCode = (int) $user->status;
+        $statusText = match ($statusCode) {
+            1 => 'approved',
+            0 => 'pending',
+            2 => 'documents_required',
+            default => 'inactive',
+        };
+
+        return response()->json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'Verification status retrieved successfully.',
+            'data' => [
+                'status' => $statusCode,
+                'status_text' => $statusText,
+                'is_approved' => $statusCode === 1,
+                'has_nid_front' => !empty($user->nid_front_photo),
+                'has_nid_back' => !empty($user->nid_back_photo),
+                'has_license' => !empty($user->license_photo),
+                'nid_number' => $user->nid_number,
+                'nid_front_photo' => $user->nid_front_photo ? url('storage/' . $user->nid_front_photo) : null,
+                'nid_back_photo' => $user->nid_back_photo ? url('storage/' . $user->nid_back_photo) : null,
+                'license_photo' => $user->license_photo ? url('storage/' . $user->license_photo) : null,
+            ],
+        ], 200);
+    }
 }
+

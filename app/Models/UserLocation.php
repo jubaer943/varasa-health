@@ -15,6 +15,7 @@ class UserLocation extends Model
         'flat_no',
         'house_no',
         'road',
+        'area',
         'aria',
         'postcode',
         'country',

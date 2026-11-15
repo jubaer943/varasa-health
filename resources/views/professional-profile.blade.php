@@ -13,12 +13,18 @@
             <div class="user-info">
                 <div class="user-name">
                     <h2>{{ $professional->full_name }}</h2>
-                    <div>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                         <button style="cursor: pointer"
                             onclick="window.location.href='{{ route('professional.earning', ['pro_id' => $professional->id]) }}'">
                             Earnings Dashboard
                         </button>
                         <button>Professional ID: {{ $professional->professional_id }}</button>
+                        <span id="statusBadge" style="padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 13px; color: white; background-color: {{ $professional->status == 1 ? '#28a745' : ($professional->status == 0 ? '#ffc107' : '#dc3545') }};">
+                            {{ $professional->status == 1 ? 'Approved / Active' : ($professional->status == 0 ? 'Pending Review' : 'Docs Required') }}
+                        </span>
+                        <button id="toggleStatusBtn" type="button" onclick="toggleStatus({{ $professional->id }})" data-current-status="{{ $professional->status }}" style="padding: 6px 14px; border-radius: 6px; border: none; cursor: pointer; color: white; font-weight: 600; background-color: {{ $professional->status == 1 ? '#dc3545' : '#28a745' }};">
+                            {{ $professional->status == 1 ? 'Deactivate' : 'Approve & Activate' }}
+                        </button>
                     </div>
                 </div>
                 <div class="profile-photo">
@@ -80,10 +86,10 @@
                         <h5>NID Attachment</h5>
                         <div>
                             <div>
-                                <img src="{{ asset('assets/images/NID-1.png') }}" alt="nid image">
+                                <img src="{{ $professional->nid_front_photo ? asset('storage/' . $professional->nid_front_photo) : asset('assets/images/NID-1.png') }}" alt="nid front">
                             </div>
                             <div>
-                                <img src="{{ asset('assets/images/NID-2.png') }}" alt="nid image">
+                                <img src="{{ $professional->nid_back_photo ? asset('storage/' . $professional->nid_back_photo) : asset('assets/images/NID-2.png') }}" alt="nid back">
                             </div>
                         </div>
                     </div>
@@ -91,7 +97,7 @@
                         <h5>License Attachment</h5>
                         <div>
                             <div>
-                                <img src="{{ asset('assets/images/NID-3.png') }}" alt="nid image">
+                                <img src="{{ $professional->license_photo ? asset('storage/' . $professional->license_photo) : asset('assets/images/NID-3.png') }}" alt="license image">
                             </div>
                         </div>
                     </div>
@@ -234,6 +240,39 @@
 
     <script>
         var pro_id = @json($pro_id);
+
+        function toggleStatus(professionalId) {
+            let btn = $('#toggleStatusBtn');
+            let currentStatus = parseInt(btn.attr('data-current-status'));
+            let newStatus = currentStatus === 1 ? 0 : 1;
+
+            $.ajax({
+                url: "{{ route('professional.action') }}",
+                type: "POST",
+                data: {
+                    id: professionalId,
+                    status: newStatus
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function(response) {
+                    if (response.new_status == 1) {
+                        $('#statusBadge').text('Approved / Active').css('background-color', '#28a745');
+                        btn.text('Deactivate').css('background-color', '#dc3545').attr('data-current-status', '1');
+                        alert('Professional has been Approved and Activated successfully!');
+                    } else {
+                        $('#statusBadge').text('Pending Review').css('background-color', '#ffc107');
+                        btn.text('Approve & Activate').css('background-color', '#28a745').attr('data-current-status', '0');
+                        alert('Professional has been Deactivated / set to Pending.');
+                    }
+                },
+                error: function(xhr) {
+                    alert('Error updating status: ' + (xhr.responseJSON?.message || 'Server error'));
+                }
+            });
+        }
+
         $(document).ready(function() {
             function fetchOrders(pro_id) {
                 let status = $(".order-type-btn button.active").attr("data-status") || 0;

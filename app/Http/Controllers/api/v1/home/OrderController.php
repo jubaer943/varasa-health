@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Home;
+namespace App\Http\Controllers\api\v1\home;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;

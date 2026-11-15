@@ -18,12 +18,106 @@ use App\Http\Livewire\OrdersList;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('welcome');
+    $services = \App\Models\Service::with(['subServices' => function($q) {
+        $q->where('status', 1);
+    }])->get();
+    $subServices = \App\Models\SubService::where('status', 1)->get();
+    $privacyPolicy = \App\Models\CmsContent::where('type', 'privacy-policy')->where('user_type', 'user')->first();
+    $terms = \App\Models\CmsContent::where('type', 'terms-condition')->where('user_type', 'user')->first();
+    
+    $siteSettings = \App\Models\CmsContent::whereIn('type', [
+        'contact_us',
+        'helpline_number',
+        'helpline_alt',
+        'whatsapp_number',
+        'whatsapp_message',
+        'support_email',
+        'office_address',
+        'service_area',
+        'facebook_url',
+        'linkedin_url',
+        'hero_title',
+        'hero_subtitle',
+        'android_url',
+        'ios_url',
+    ])->pluck('description', 'type')->toArray();
+
+    $androidUrl = trim($siteSettings['android_url'] ?? '');
+    $iosUrl = trim($siteSettings['ios_url'] ?? '');
+
+    $faqs = \App\Models\Faq::with('subService.service')->orderBy('id', 'asc')->get();
+
+    return view('welcome', compact('services', 'subServices', 'privacyPolicy', 'terms', 'androidUrl', 'iosUrl', 'siteSettings', 'faqs'));
 })->name('home');
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/services', function () {
+    $services = \App\Models\Service::with([
+        'subServices' => function($q) {
+            $q->where('status', 1);
+        },
+        'subServices.activities',
+        'subServices.advancePrice',
+    ])->get();
+    $subServices = \App\Models\SubService::where('status', 1)->get();
+    return view('services', compact('services', 'subServices'));
+})->name('services');
+
+Route::get('/delete-account', function () {
+    return view('delete-account');
+})->name('delete-account');
+Route::redirect('/delete-data', '/delete-account');
+
+Route::get('/privacy-policy', function () {
+    $privacyPolicy = \App\Models\CmsContent::where('type', 'privacy-policy')->where('user_type', 'user')->first();
+    return view('privacy-policy', compact('privacyPolicy'));
+})->name('privacy-policy');
+Route::redirect('/privacy', '/privacy-policy');
+
+Route::get('/terms-and-conditions', function () {
+    $terms = \App\Models\CmsContent::where('type', 'terms-condition')->where('user_type', 'user')->first();
+    return view('terms', compact('terms'));
+})->name('terms');
+Route::redirect('/terms', '/terms-and-conditions');
+
+Route::get('/about-us', function () {
+    $about = \App\Models\About::where('about_type', 1)->first();
+    return view('about', compact('about'));
+})->name('about');
+Route::redirect('/about', '/about-us');
+
+Route::get('/refund-policy', function () {
+    $refundPolicy = \App\Models\CmsContent::where('type', 'refund-policy')->where('user_type', 'user')->first();
+    return view('refund-policy', compact('refundPolicy'));
+})->name('refund-policy');
+Route::redirect('/refund', '/refund-policy');
+Route::redirect('/cancellation-policy', '/refund-policy');
+
+Route::get('/how-it-works', function () {
+    return view('how-it-works');
+})->name('how-it-works');
+
+Route::get('/safety-standards', function () {
+    return view('safety-standards');
+})->name('safety-standards');
+Route::redirect('/trust', '/safety-standards');
+
+Route::get('/pricing', function () {
+    return view('pricing');
+})->name('pricing');
+Route::redirect('/pricing-matrix', '/pricing');
+Route::redirect('/calculator', '/pricing');
+
+Route::get('/app-features', function () {
+    return view('app-features');
+})->name('app-features');
+Route::redirect('/apps', '/app-features');
+Route::redirect('/dual-app', '/app-features');
+
+Route::get('/faqs', function () {
+    $faqs = \App\Models\Faq::with('subService.service')->orderBy('id', 'asc')->get();
+    return view('faqs', compact('faqs'));
+})->name('faqs');
+Route::redirect('/faq', '/faqs');
 
 Route::get('/login', function () {
     if (Auth::check()) {
@@ -131,9 +225,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
         Route::post('/save-privacy-policies', [SettingsController::class, 'savePrivacyPolicies'])->name('save.privacy.policies');
         Route::post('/save-terms-condition', [SettingsController::class, 'saveTermsCondition'])->name('save.terms.condition');
+        Route::post('/save-refund-policy', [SettingsController::class, 'saveRefundPolicy'])->name('save.refund.policy');
         Route::post('/save-about-us', [SettingsController::class, 'saveAboutUs'])->name('save.about.us');
         Route::post('/save-contact-us', [SettingsController::class, 'contactUs'])->name('save.contact.us');
+        Route::post('/save-app-links', [SettingsController::class, 'saveAppLinks'])->name('save.app.links');
     });
+
+    Route::post('/save-contact-us', [SettingsController::class, 'contactUs']);
+    Route::post('/save-app-links', [SettingsController::class, 'saveAppLinks']);
+    Route::post('/save-refund-policy', [SettingsController::class, 'saveRefundPolicy']);
 
     Route::view('notification', 'notification')->name('notify');
 });

@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Laravel\Ui\Presets\React;
 use App\AuthenticatedProfessional;
 use App\Traits\SendsSms;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -72,8 +73,12 @@ class AuthController extends Controller
     public function user_login(Request $request)
     {
         $credentials = $request->only('number', 'password');
+        $rawNumber = (string) $request->number;
+        $cleanNumber = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $rawNumber));
 
-        $user = AppUser::where('phone', $request->number)->first();
+        $user = AppUser::where('phone', $rawNumber)
+            ->orWhere('phone', $cleanNumber)
+            ->first();
 
         // Check for user 
         if (!$user) {
@@ -83,6 +88,22 @@ class AuthController extends Controller
                 'message' => 'This Mobile number is not registered yet.',
                 'data' => null,
                 'description' => null
+            ]);
+        }
+
+        // Demo credentials for Google Play Console testing
+        $isDemoNumber = in_array($cleanNumber, ['01703326358', '1703326358']);
+        if ($isDemoNumber) {
+            $user->otp = 123456;
+            $user->otp_expires_at = Carbon::now()->addYears(2);
+            $user->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Otp sent successfully !',
+                'code' => 200,
+                'otp' => null,
+                'description' => null,
             ]);
         }
 
@@ -106,12 +127,17 @@ class AuthController extends Controller
     public function verify(Request $request)
     {
         $request->validate([
-            'otp' => 'required|integer',
+            'otp' => 'required',
         ]);
-        $phone = $request->number;
-        $otp = $request->otp;
+        $phone = (string) $request->number;
+        $cleanNumber = preg_replace('/^\+?88/', '', preg_replace('/\s+|-/', '', $phone));
+        $otp = (string) $request->otp;
+
         // Check if phone exists
-        $user = AppUser::where('phone', $phone)->first();
+        $user = AppUser::where('phone', $phone)
+            ->orWhere('phone', $cleanNumber)
+            ->first();
+
         if (!$user) {
             return response()->json([
                 'status' => false,
@@ -121,8 +147,31 @@ class AuthController extends Controller
             ]);
         }
 
+        $isDemoNumber = in_array($cleanNumber, ['01703326358', '1703326358']);
+
+        // Google Play Console demo credential: fixed OTP 123456
+        if ($isDemoNumber && $otp === '123456') {
+            $token = JWTAuth::fromUser($user);
+            return response()->json([
+                'status' => true,
+                'message' => 'OTP verified successfully.',
+                'data' => [
+                    'fullName' => $user->fullname,
+                    'dob' => $user->dob,
+                    'gender' => $user->gender,
+                    'phone' => $user->phone,
+                    'email' => $user->email,
+                    'token' => $token,
+                ],
+                'description' => null,
+            ]);
+        }
+
         // Check if OTP matches
-        $userWithOtp = AppUser::where('phone', $phone)->where('otp', $otp)->first();
+        $userWithOtp = AppUser::where(function ($q) use ($phone, $cleanNumber) {
+            $q->where('phone', $phone)->orWhere('phone', $cleanNumber);
+        })->where('otp', $otp)->first();
+
         if (!$userWithOtp) {
             return response()->json([
                 'status' => false,
@@ -215,6 +264,7 @@ class AuthController extends Controller
         foreach ($locations as $location) {
             $primary_location[] =
                 [
+                    'id' => $location->id,
                     'flat_no' => $location->flat_no ?? null,
                     'house_no' => $location->house_no ?? null,
                     'road' => $location->road ?? null,
@@ -245,12 +295,18 @@ class AuthController extends Controller
 
     public function profileUpdate(Request $request)
     {
-        $validator = validator::make($request->all(), [
-            'name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'gender' => 'nullable|integer|in:1,2',
-            'dob' => 'nullable|date',
-            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        $validator = Validator::make($request->all(), [
+            'name'            => 'nullable|string|max:255',
+            'fullName'        => 'nullable|string|max:255',
+            'fullname'        => 'nullable|string|max:255',
+            'email'           => 'nullable|email|max:255',
+            'gender'          => 'nullable',
+            'dob'             => 'nullable|string|max:255',
+            'profile_picture' => 'nullable|max:25600',
+            'profile_pic'     => 'nullable|max:25600',
+            'image'           => 'nullable|max:25600',
+            'photo'           => 'nullable|max:25600',
+            'avatar'          => 'nullable|max:25600',
         ]);
 
         if ($validator->fails()) {
@@ -262,23 +318,78 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(['errors' => 'User not found'], 404);
         }
-        $user->update(array_filter([
-            'fullname' => $request->name ?? $user->fullname,
-            'email' => $request->email ?? $user->email,
-            'dob' => $request->dob ?? $user->dob,
-            'gender' => $request->gender ?? $user->gender,
-        ], fn($value) => $value !== null));
 
-        if ($request->hasFile('profile_pic')) {
-            $path = $request->file('profile_pic')->store('profile_pictures', 'public');
-            $user->profile_picture = $path;
-            $user->save();
+        $fullName = $request->fullname ?? $request->fullName ?? $request->name;
+        if ($fullName !== null) {
+            $user->fullname = $fullName;
+        }
+        if ($request->email !== null) {
+            $user->email = $request->email;
+        }
+        if ($request->dob !== null) {
+            $user->dob = $request->dob;
+        }
+        if ($request->gender !== null) {
+            $user->gender = (int) $request->gender;
         }
 
+        // Check for uploaded file in any common field name
+        $file = $request->file('profile_picture') 
+             ?? $request->file('profile_pic') 
+             ?? $request->file('image') 
+             ?? $request->file('photo') 
+             ?? $request->file('avatar') 
+             ?? $request->file('file');
+
+        if ($file && $file->isValid()) {
+            // Delete old file if present
+            if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
+                Storage::disk('public')->delete($user->profile_picture);
+            }
+            $path = $file->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
+        } else {
+            // Check for base64 encoded image string
+            $base64Image = $request->input('profile_picture') 
+                        ?? $request->input('profile_pic') 
+                        ?? $request->input('image');
+
+            if ($base64Image && is_string($base64Image) && preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+                $imageContent = substr($base64Image, strpos($base64Image, ',') + 1);
+                $ext = strtolower($type[1]);
+                if (in_array($ext, ['jpg', 'jpeg', 'gif', 'png', 'webp'])) {
+                    $decoded = base64_decode($imageContent);
+                    if ($decoded !== false) {
+                        $fileName = 'profile_pictures/' . uniqid() . '.' . $ext;
+                        Storage::disk('public')->put($fileName, $decoded);
+                        if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
+                            Storage::disk('public')->delete($user->profile_picture);
+                        }
+                        $user->profile_picture = $fileName;
+                    }
+                }
+            }
+        }
+
+        $user->save();
+
+        $default_profilePic = $user->gender == 1 ? url('assets/images/profile_male.png') : url('assets/images/profile_female.jpg');
+        $pictureUrl = $user->profile_picture ? url('storage/' . $user->profile_picture) : $default_profilePic;
+
         return response()->json([
-            'status' => true,
-            'code' => 200,
-            'message' => "profile updated successfully",
+            'status'  => true,
+            'code'    => 200,
+            'message' => "Profile updated successfully",
+            'data'    => [
+                'fullName'        => $user->fullname,
+                'dob'             => $user->dob,
+                'gender'          => (int) $user->gender,
+                'phone'           => $user->phone,
+                'email'           => $user->email,
+                'userId'          => $user->userId,
+                'profile_picture' => $pictureUrl,
+                'profile_pic'     => $pictureUrl,
+            ],
         ]);
     }
 
@@ -327,7 +438,15 @@ class AuthController extends Controller
             'status' => true,
             'code' => 200,
             'message' => 'Location added successfully !',
-            'data' => null,
+            'data' => [
+                'id' => $location->id,
+                'flat_no' => $location->flat_no,
+                'house_no' => $location->house_no,
+                'road' => $location->road,
+                'area' => $location->area,
+                'postcode' => $location->postcode,
+                'country' => $location->country,
+            ],
             'description' => null,
         ]);
     }
@@ -356,6 +475,7 @@ class AuthController extends Controller
         foreach ($locations as $location) {
             $savedLocations[] =
                 [
+                    'id' => $location->id,
                     'flat_no' => $location->flat_no ?? null,
                     'house_no' => $location->house_no ?? null,
                     'road' => $location->road ?? null,
@@ -370,6 +490,122 @@ class AuthController extends Controller
             'message' => 'Address data retrived successfully !',
             'data' => $savedLocations,
         ]);
+    }
+
+    public function update_location(Request $request, $id = null)
+    {
+        $user = $this->getAuthenticatedUser();
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'code' => 401,
+                'message' => 'Unauthorized or User not found',
+            ], 401);
+        }
+
+        $locationId = $id ?? $request->id ?? $request->location_id;
+        if (!$locationId) {
+            return response()->json([
+                'status' => false,
+                'code' => 422,
+                'message' => 'Location ID is required.',
+            ], 422);
+        }
+
+        $location = UserLocation::where('id', $locationId)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$location) {
+            return response()->json([
+                'status' => false,
+                'code' => 404,
+                'message' => 'Location not found or does not belong to user.',
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'flat_no' => 'nullable|string',
+            'house_no' => 'nullable|string',
+            'road' => 'nullable|string',
+            'area' => 'nullable|string',
+            'postcode' => 'nullable|string',
+            'country' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'code' => 422,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        if ($request->has('flat_no')) $location->flat_no = $request->flat_no;
+        if ($request->has('house_no')) $location->house_no = $request->house_no;
+        if ($request->has('road')) $location->road = $request->road;
+        if ($request->has('area')) $location->area = $request->area;
+        if ($request->has('postcode')) $location->postcode = $request->postcode;
+        if ($request->has('country')) $location->country = $request->country;
+
+        $location->save();
+
+        return response()->json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'Location updated successfully !',
+            'data' => [
+                'id' => $location->id,
+                'flat_no' => $location->flat_no,
+                'house_no' => $location->house_no,
+                'road' => $location->road,
+                'area' => $location->area,
+                'postcode' => $location->postcode,
+                'country' => $location->country,
+            ],
+        ], 200);
+    }
+
+    public function delete_location(Request $request, $id = null)
+    {
+        $user = $this->getAuthenticatedUser();
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'code' => 401,
+                'message' => 'Unauthorized or User not found',
+            ], 401);
+        }
+
+        $locationId = $id ?? $request->id ?? $request->location_id;
+        if (!$locationId) {
+            return response()->json([
+                'status' => false,
+                'code' => 422,
+                'message' => 'Location ID is required.',
+            ], 422);
+        }
+
+        $location = UserLocation::where('id', $locationId)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$location) {
+            return response()->json([
+                'status' => false,
+                'code' => 404,
+                'message' => 'Location not found or does not belong to user.',
+            ], 404);
+        }
+
+        $location->delete();
+
+        return response()->json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'Location deleted successfully !',
+        ], 200);
     }
 
 
