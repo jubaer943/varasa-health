@@ -7,6 +7,7 @@ use App\Http\Controllers\api\v1\home\DashboardController;
 use App\Http\Controllers\api\v1\home\EarningController;
 use App\Http\Controllers\api\v1\home\ServiceController;
 use App\Http\Controllers\api\v1\home\OrderController;
+use App\Http\Controllers\api\v1\MapboxTokenController;
 use App\Http\Controllers\api\v1\NotificationController;
 use App\Http\Controllers\api\v1\ReviewController;
 use App\Http\Controllers\api\v1\SettingsController;
@@ -106,6 +107,9 @@ Route::prefix('v1')->group(function () {
         Route::post('save/token', [NotificationController::class, 'saveFCMToken']);
         Route::get('notify', [NotificationController::class, 'sendNotification']);
     });
+
+    Route::post('/mapbox/token', [MapboxTokenController::class, 'store']);
+    Route::get('/mapbox/token', [MapboxTokenController::class, 'show']);
 
     Route::post('/account/delete', [AuthController::class, 'deleteAccount']);
 

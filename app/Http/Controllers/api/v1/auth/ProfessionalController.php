@@ -332,7 +332,7 @@ class ProfessionalController extends Controller
                 'status' => (int) $user->status,
                 'profile_picture' => $user->profile_picture ? url('storage/' . $user->profile_picture) : null,
                 'ratting' => $user->providerAverageRating,
-                'token' => $token,  // Only if using token authentication
+                'token' => $token,
             ],
         ], 200);
     }
